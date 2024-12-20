@@ -1,9 +1,9 @@
 package com.bancos.cuentasbancarias.controller;
 
-import com.bancos.cuentasbancarias.documents.Cliente;
-import com.bancos.cuentasbancarias.documents.Cuenta;
-import com.bancos.cuentasbancarias.service.ClienteService;
+import com.bancos.cuentasbancarias.documents.Account;
+import com.bancos.cuentasbancarias.service.AccountService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,42 +18,44 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 @RestController
-@RequestMapping("/api/clientes")
-public class ClienteController {
+@RequestMapping("/api/cuenta")
+public class AccountController {
 
     @Autowired
-    private ClienteService clienteService;
+    private AccountService accountService;
 
     @GetMapping()
-    public Mono<ResponseEntity<Flux<Cliente>>>  listarClientes(){
-     return Mono.just(ResponseEntity.ok()
-             .contentType(MediaType.APPLICATION_JSON_UTF8)
-             .body(clienteService.findAll()) );
+    public Mono<ResponseEntity<List<Account>>> getAllAccounts() {
+        log.info("CuentaController.getAllAccounts");
+        return accountService.getAllCuentas()
+                .collectList()
+                .map(ResponseEntity::ok);
     }
 
-    @GetMapping("/{id}")
-    public Mono<ResponseEntity<Cliente>>  getCliente(@PathVariable String id){
 
-        return clienteService.findById(id)
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<Account>>  getCuenta(@PathVariable String id){
+
+        return accountService.getCuentaById(id)
                 .map(c->ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .body(c))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
     @PostMapping
-    public Mono<ResponseEntity<Map<String, Object>>> guardarCliente(@Valid @RequestBody Mono<Cliente> monoCliente) {
+    public Mono<ResponseEntity<Map<String, Object>>> guardarCuenta(@Valid @RequestBody Mono<Account> monoCuenta) {
 
         Map<String, Object> respuesta = new HashMap<>();
 
-        return monoCliente.flatMap(cliente -> {
-            return clienteService.save(cliente).map(c -> {
-                respuesta.put("cliente", c);
-                respuesta.put("mensaje", "Cliente Guardado con Exito");
+        return monoCuenta.flatMap(cuenta -> {
+            return accountService.createCuenta(cuenta).map(c -> {
+                respuesta.put("cuenta", c);
+                respuesta.put("mensaje", "Cuenta Guardado con Exito");
                 respuesta.put("timestamp", new Date());
 
-                return ResponseEntity.created(URI.create("/api/clientes/".concat(String.valueOf(c.getId()))))
+                return ResponseEntity.created(URI.create("/api/cuenta/".concat(String.valueOf(c.getId()))))
                         .contentType(MediaType.APPLICATION_JSON_UTF8).body(respuesta);
 
             });
@@ -63,7 +65,7 @@ public class ClienteController {
                     .flatMapMany(Flux::fromIterable)
                     .map(fieldError -> "El campo:" + fieldError.getField() + "" + fieldError.getDefaultMessage())
                     .collectList().flatMap(list -> {
-                        respuesta.put("cliente", list);
+                        respuesta.put("cuenta", list);
                         respuesta.put("timestamp", new Date());
                         respuesta.put("status", HttpStatus.BAD_REQUEST.value());
                         return Mono.just(ResponseEntity.badRequest().body(respuesta));
@@ -73,12 +75,9 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Cliente>> editarCliente(@RequestBody Cliente cliente, @PathVariable String id) {
-        return clienteService.findById(id).flatMap(c -> {
-                    c.setNombre(cliente.getNombre());
-                    c.setClientType(cliente.getClientType());
-                    return clienteService.save(c);
-                }).map(c -> ResponseEntity.created(URI.create("/api/clientes/".concat(String.valueOf(c.getId()))))
+    public Mono<ResponseEntity<Account>> editarCuenta(@RequestBody Account account, @PathVariable String id) {
+        return accountService.updateCuenta(id, account)
+                .map(c -> ResponseEntity.created(URI.create("/api/cuenta/".concat(String.valueOf(c.getId()))))
                         .contentType(MediaType.APPLICATION_JSON_UTF8).body(c))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
 
@@ -86,14 +85,14 @@ public class ClienteController {
 
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> eliminarCliente(@PathVariable String id) {
-        return clienteService.findById(id).flatMap(c -> {
-            return clienteService.delete(c).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
+        return accountService.getCuentaById(id).flatMap(c -> {
+            return accountService.deleteCuenta(c).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
         }).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
 
     }
 
-    @PostMapping("/{clienteId}/agregarCuentas")
-    public Mono<List<Cuenta>> agregarCuentasCliente(@PathVariable String clienteId, @RequestBody List<Cuenta> lstCuentas) {
-        return clienteService.saveCuentaByCliente(clienteId, lstCuentas);
-    }
+
+
+
+
 }

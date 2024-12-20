@@ -4,13 +4,12 @@ import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @Document(collection = "cuenta")
-public class Cuenta {
+public class Account {
     @Id
     private ObjectId id;
     private double saldo;
@@ -19,5 +18,5 @@ public class Cuenta {
     @Field("cliente_id")
     private ObjectId cliente_id;
     @Transient
-    private Cliente cliente;
+    private Client client;
 }
