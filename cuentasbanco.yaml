@@ -1,0 +1,344 @@
+Entendido. Aquí tienes el contrato OpenAPI actualizado para incluir los mensajes de respuesta `200` y `400` para cada endpoint:
+
+```yaml
+openapi: 3.0.3
+info:
+  title: Banco API
+  description: API para gestionar clientes y productos de un banco
+  version: 1.0.0
+servers:
+  - url: http://localhost:8585
+tags:
+  - name: cliente
+    description: Operaciones relacionadas con clientes
+  - name: cuenta
+    description: Operaciones relacionadas con cuentas bancarias
+  - name: credito
+    description: Operaciones relacionadas con créditos
+  - name: tarjetaCredito
+    description: Operaciones relacionadas con tarjetas de crédito
+  - name: movimiento
+    description: Operaciones relacionadas con movimientos
+
+paths:
+  /clientes:
+    get:
+      tags:
+        - cliente
+      summary: Obtener todos los clientes
+      responses:
+        '200':
+          description: Lista de clientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cliente'
+        '400':
+          description: Solicitud inválida
+    post:
+      tags:
+        - cliente
+      summary: Crear un nuevo cliente
+      requestBody:
+        description: Datos del nuevo cliente
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '201':
+          description: Cliente creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '400':
+          description: Solicitud inválida
+
+  /clientes/{clienteId}:
+    get:
+      tags:
+        - cliente
+      summary: Obtener un cliente por ID
+      parameters:
+        - name: clienteId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Datos del cliente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '400':
+          description: Solicitud inválida
+        '404':
+          description: Cliente no encontrado
+
+  /cuentas:
+    get:
+      tags:
+        - cuenta
+      summary: Obtener todas las cuentas
+      responses:
+        '200':
+          description: Lista de cuentas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cuenta'
+        '400':
+          description: Solicitud inválida
+    post:
+      tags:
+        - cuenta
+      summary: Crear una nueva cuenta
+      requestBody:
+        description: Datos de la nueva cuenta
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cuenta'
+      responses:
+        '201':
+          description: Cuenta creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cuenta'
+        '400':
+          description: Solicitud inválida
+
+  /creditos:
+    get:
+      tags:
+        - credito
+      summary: Obtener todos los créditos
+      responses:
+        '200':
+          description: Lista de créditos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Credito'
+        '400':
+          description: Solicitud inválida
+    post:
+      tags:
+        - credito
+      summary: Crear un nuevo crédito
+      requestBody:
+        description: Datos del nuevo crédito
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credito'
+      responses:
+        '201':
+          description: Crédito creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credito'
+        '400':
+          description: Solicitud inválida
+
+  /tarjetasCredito:
+    get:
+      tags:
+        - tarjetaCredito
+      summary: Obtener todas las tarjetas de crédito
+      responses:
+        '200':
+          description: Lista de tarjetas de crédito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TarjetaCredito'
+        '400':
+          description: Solicitud inválida
+    post:
+      tags:
+        - tarjetaCredito
+      summary: Crear una nueva tarjeta de crédito
+      requestBody:
+        description: Datos de la nueva tarjeta de crédito
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TarjetaCredito'
+      responses:
+        '201':
+          description: Tarjeta de crédito creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TarjetaCredito'
+        '400':
+          description: Solicitud inválida
+
+  /movimientos:
+    get:
+      tags:
+        - movimiento
+      summary: Obtener todos los movimientos
+      responses:
+        '200':
+          description: Lista de movimientos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movimiento'
+        '400':
+          description: Solicitud inválida
+    post:
+      tags:
+        - movimiento
+      summary: Crear un nuevo movimiento
+      requestBody:
+        description: Datos del nuevo movimiento
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movimiento'
+      responses:
+        '201':
+          description: Movimiento creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movimiento'
+        '400':
+          description: Solicitud inválida
+
+components:
+  schemas:
+    Cliente:
+      type: object
+      properties:
+        id:
+          type: string
+        nombre:
+          type: string
+        direccion:
+          type: string
+        tipo:
+          type: string
+          enum: [personal, empresarial]
+        cuentas:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cuenta'
+        creditos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Credito'
+        tarjetasCredito:
+          type: array
+          items:
+            $ref: '#/components/schemas/TarjetaCredito'
+
+    Cuenta:
+      type: object
+      properties:
+        id:
+          type: string
+        tipo:
+          type: string
+          enum: [ahorro, corriente, plazoFijo]
+        saldo:
+          type: number
+        limiteMovimientos:
+          type: integer
+        comision:
+          type: number
+        fechaMovimiento:
+          type: string
+          format: date
+        movimientos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Movimiento'
+
+    Movimiento:
+      type: object
+      properties:
+        id:
+          type: string
+        fecha:
+          type: string
+          format: date
+        monto:
+          type: number
+        tipo:
+          type: string
+          enum: [deposito, retiro]
+
+    Credito:
+      type: object
+      properties:
+        id:
+          type: string
+        monto:
+          type: number
+        tipo:
+          type: string
+          enum: [personal, empresarial]
+        pagos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pago'
+
+    Pago:
+      type: object
+      properties:
+        id:
+          type: string
+        fecha:
+          type: string
+          format: date
+        monto:
+          type: number
+
+    TarjetaCredito:
+      type: object
+      properties:
+        id:
+          type: string
+        limiteCredito:
+          type: number
+        saldoDisponible:
+          type: number
+        consumos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Consumo'
+
+    Consumo:
+      type: object
+      properties:
+        id:
+          type: string
+        fecha:
+          type: string
+          format: date
+        monto:
+          type: number
