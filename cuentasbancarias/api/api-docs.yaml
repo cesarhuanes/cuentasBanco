@@ -1,0 +1,258 @@
+openapi: 3.0.1
+info:
+  title: Cuentas Bancarias
+  description: Documentacion de endpoint en Cuentas
+  version: "1.0"
+servers:
+- url: http://localhost:8585
+  description: Generated server url
+paths:
+  /api/cuenta/{id}:
+    get:
+      tags:
+      - account-controller
+      operationId: getCuenta
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Account"
+    put:
+      tags:
+      - account-controller
+      operationId: editarCuenta
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Account"
+    delete:
+      tags:
+      - account-controller
+      operationId: eliminarCliente
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /api/clientes/{id}:
+    get:
+      tags:
+      - client-controller
+      operationId: getCliente
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Client"
+    put:
+      tags:
+      - client-controller
+      operationId: editarCliente
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Client"
+    delete:
+      tags:
+      - client-controller
+      operationId: eliminarCliente_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /api/cuenta:
+    get:
+      tags:
+      - account-controller
+      operationId: getAllAccounts
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+    post:
+      tags:
+      - account-controller
+      operationId: guardarCuenta
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+  /api/clientes:
+    get:
+      tags:
+      - client-controller
+      operationId: listarClientes
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Client"
+    post:
+      tags:
+      - client-controller
+      operationId: guardarCliente
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+  /api/clientes/{clienteId}/agregarCuentas:
+    post:
+      tags:
+      - client-controller
+      operationId: agregarCuentasCliente
+      parameters:
+      - name: clienteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Account"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ObjectId"
+        saldo:
+          type: number
+          format: double
+        accountType:
+          type: string
+          enum:
+          - AHORRO
+          - CORRIENTE
+          - PLAZO_FIJO
+        cliente_id:
+          $ref: "#/components/schemas/ObjectId"
+        client:
+          $ref: "#/components/schemas/Client"
+    Client:
+      required:
+      - nombre
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ObjectId"
+        nombre:
+          type: string
+        clientType:
+          type: string
+          enum:
+          - PERSONAL
+          - EMPRESARIAL
+        cuentas:
+          type: array
+          items:
+            $ref: "#/components/schemas/ObjectId"
+    ObjectId:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int32
+        date:
+          type: string
+          format: date-time
