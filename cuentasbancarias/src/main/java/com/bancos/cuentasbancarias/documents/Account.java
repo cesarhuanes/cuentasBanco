@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
+
 @Data
 @Document(collection = "cuenta")
 public class Account {
@@ -19,4 +21,9 @@ public class Account {
     private ObjectId cliente_id;
     @Transient
     private Client client;
+
+    private List<Holder> titulares;
+    private List<Signature> firmantesAutorizados;
+    private List<Credit> creditList;
+
 }

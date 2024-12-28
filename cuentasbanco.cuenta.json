@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "6765e4fb82455a2245178885"
+  },
+  "saldo": 3000,
+  "accountType": "CORRIENTE",
+  "cliente_id": {
+    "$oid": "6765e4b182455a2245178884"
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Cuenta"
+},
+{
+  "_id": {
+    "$oid": "6765e4fb82455a2245178886"
+  },
+  "saldo": 500,
+  "accountType": "CORRIENTE",
+  "cliente_id": {
+    "$oid": "6765e4b182455a2245178884"
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Cuenta"
+}]

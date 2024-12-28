@@ -24,76 +24,47 @@ import java.util.Map;
 public class ClientController {
 
     @Autowired
-    private ClientService clienteService;
+    private ClientService clientService;
 
-    @GetMapping()
-    public Mono<ResponseEntity<Flux<Client>>>  listarClientes(){
-     return Mono.just(ResponseEntity.ok()
-             .contentType(MediaType.APPLICATION_JSON_UTF8)
-             .body(clienteService.findAll()) );
+    @GetMapping
+    public Flux<Client> getAllClients() {
+        return clientService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<Client>>  getCliente(@PathVariable String id){
-
-        return clienteService.findById(id)
-                .map(c->ResponseEntity.ok()
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .body(c))
+    public Mono<ResponseEntity<Client>> getClientById(@PathVariable String id) {
+        return clientService.findById(id)
+                .map(client -> ResponseEntity.ok(client))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
+
     @PostMapping
-    public Mono<ResponseEntity<Map<String, Object>>> guardarCliente(@Valid @RequestBody Mono<Client> monoCliente) {
-
-        Map<String, Object> respuesta = new HashMap<>();
-
-        return monoCliente.flatMap(cliente -> {
-            return clienteService.save(cliente).map(c -> {
-                respuesta.put("cliente", c);
-                respuesta.put("mensaje", "Cliente Guardado con Exito");
-                respuesta.put("timestamp", new Date());
-
-                return ResponseEntity.created(URI.create("/api/clientes/".concat(String.valueOf(c.getId()))))
-                        .contentType(MediaType.APPLICATION_JSON_UTF8).body(respuesta);
-
-            });
-
-        }).onErrorResume(t -> {
-            return Mono.just(t).cast(WebExchangeBindException.class).flatMap(e -> Mono.just(e.getFieldErrors()))
-                    .flatMapMany(Flux::fromIterable)
-                    .map(fieldError -> "El campo:" + fieldError.getField() + "" + fieldError.getDefaultMessage())
-                    .collectList().flatMap(list -> {
-                        respuesta.put("cliente", list);
-                        respuesta.put("timestamp", new Date());
-                        respuesta.put("status", HttpStatus.BAD_REQUEST.value());
-                        return Mono.just(ResponseEntity.badRequest().body(respuesta));
-                    });
-
-        });
+    public Mono<ResponseEntity<Client>> createClient(@RequestBody Client client) {
+        return clientService.save(client)
+                .map(savedClient -> ResponseEntity.status(201).body(savedClient))
+                .defaultIfEmpty(ResponseEntity.badRequest().build());
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Client>> editarCliente(@RequestBody Client client, @PathVariable String id) {
-        return clienteService.findById(id).flatMap(c -> {
-                    c.setNombre(client.getNombre());
-                    c.setClientType(client.getClientType());
-                    return clienteService.save(c);
-                }).map(c -> ResponseEntity.created(URI.create("/api/clientes/".concat(String.valueOf(c.getId()))))
-                        .contentType(MediaType.APPLICATION_JSON_UTF8).body(c))
+    public Mono<ResponseEntity<Client>> updateClient(@PathVariable String id, @RequestBody Client client) {
+        return clientService.findById(id)
+                .flatMap(existingClient -> {
+                    existingClient.setNombre(client.getNombre());
+                    existingClient.setClientTypeId(client.getClientTypeId());
+                    return clientService.save(existingClient);
+                })
+                .map(updatedClient -> ResponseEntity.ok(updatedClient))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
-
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> eliminarCliente(@PathVariable String id) {
-        return clienteService.findById(id).flatMap(c -> {
-            return clienteService.delete(c).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
-        }).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
-
+    public Mono<ResponseEntity<Void>> deleteClient(@PathVariable String id) {
+        return clientService.deleteById(id)
+                .then(Mono.just(ResponseEntity.ok().build()));
     }
 
     @PostMapping("/{clienteId}/agregarCuentas")
     public Mono<List<Account>> agregarCuentasCliente(@PathVariable String clienteId, @RequestBody List<Account> lstAccounts) {
-        return clienteService.saveCuentaByCliente(clienteId, lstAccounts);
+        return clientService.saveCuentaByCliente(clienteId, lstAccounts);
     }
 }

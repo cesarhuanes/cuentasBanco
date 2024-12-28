@@ -1,0 +1,25 @@
+[{
+  "_id": {
+    "$oid": "6765e49a82455a2245178883"
+  },
+  "nombre": "BELEN PINEDO",
+  "clientType": "PERSONAL",
+  "id": [],
+  "_class": "com.bancos.cuentasbancarias.documents.Cliente"
+},
+{
+  "_id": {
+    "$oid": "6765e4b182455a2245178884"
+  },
+  "nombre": "CESAR HUANES",
+  "clientType": "EMPRESARIAL",
+  "id": [
+    {
+      "$oid": "6765e4fb82455a2245178885"
+    },
+    {
+      "$oid": "6765e4fb82455a2245178886"
+    }
+  ],
+  "_class": "com.bancos.cuentasbancarias.documents.Cliente"
+}]
