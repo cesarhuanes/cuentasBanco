@@ -3,12 +3,16 @@ package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.AccountType;
 import com.bancos.cuentasbancarias.documents.Client;
 import com.bancos.cuentasbancarias.documents.Account;
+import com.bancos.cuentasbancarias.repository.AccountTypeDAO;
 import com.bancos.cuentasbancarias.repository.ClientDAO;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
 import com.bancos.cuentasbancarias.repository.ClientTypeDAO;
 import com.bancos.cuentasbancarias.service.ClientService;
 import com.bancos.cuentasbancarias.util.Constants;
+
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -20,12 +24,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-   @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
+
+    @Autowired
    private ClientDAO clientDAO;
    @Autowired
    private AccountDAO accountDAO;
    @Autowired
    private ClientTypeDAO clientTypeDAO;
+   @Autowired
+   private AccountTypeDAO accountTypeDAO;
     @Override
     public Flux<Client> findAll() {
         return clientDAO.findAll()
@@ -65,22 +73,38 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Mono<List<Account>> saveCuentaByCliente(String clienteId, List<Account> lstAccounts) {
        ObjectId objectId=new ObjectId(clienteId);
-        return  clientDAO.findById(objectId)
+        return clientDAO.findById(objectId)
                 .flatMap(cliente -> {
-                    if (cliente.getCuentas() == null) {
-                        cliente.setCuentas(new ArrayList<>()); // Inicializar la lista si es null
-                    }
-                    String tipoCLienteNombre=cliente.getClientType().getNombre();
-                    if (tipoCLienteNombre.equals(Constants.TIPO_CLIENTE_PERSONA)) {
-                        return validarCuentasPersonales(cliente, lstAccounts)
-                                .then(Mono.defer(() -> guardarCuentas(cliente, lstAccounts, objectId)));
-                    } else if(tipoCLienteNombre.equals(Constants.TIPO_CLIENTE_EMPRESA)){
-                        return validarCuentasEmpresariales(cliente, lstAccounts)
-                                .then(Mono.defer(() -> guardarCuentas(cliente, lstAccounts, objectId)));
-                    }
-                    else {
-                        return guardarCuentas(cliente, lstAccounts, objectId);
-                    }
+                    // Asignar el Client a cada Account
+                    Flux<Account> accountsWithClient = Flux.fromIterable(lstAccounts)
+                            .doOnNext(account -> account.setClient(cliente));
+
+                    // Asignar el AccountType a cada Account
+                    Flux<Account> accountsWithClientAndType = accountsWithClient.flatMap(account ->
+                            accountTypeDAO.findById(account.getAccountTypeId())
+                                    .map(accountType -> {
+                                        account.setAccountType(accountType);
+                                        return account;
+                                    })
+                    );
+
+                    return accountsWithClientAndType.collectList().flatMap(accounts -> {
+                        String tipoClienteNombre = cliente.getClientType().getNombre();
+                        logger.info("Tipo Cliente = {}", tipoClienteNombre);
+
+                        Mono<Void> validationMono;
+                        if (tipoClienteNombre.equals(Constants.TIPO_CLIENTE_PERSONA)) {
+                            logger.info("Validando Cliente Persona = {}");
+                            validationMono = validarCuentasPersonales(cliente, accounts);
+                        } else if (tipoClienteNombre.equals(Constants.TIPO_CLIENTE_EMPRESA)) {
+                            logger.info("Validando Cliente Empresa = {}");
+                            validationMono = validarCuentasEmpresariales(cliente, accounts);
+                        } else {
+                            validationMono = Mono.empty();
+                        }
+
+                        return validationMono.then(guardarCuentas(cliente, accounts, objectId));
+                    });
                 });
 
 
@@ -123,7 +147,9 @@ public class ClientServiceImpl implements ClientService {
                     break;
             }
         }
-
+        logger.info("Cantidad de cuentas de ahorro ={} ",ahorroCount);
+        logger.info("Cantidad de cuentas de corriente ={} ",corrienteCount);
+        logger.info("Cantidad de cuentas de plazo fijo = {} ",plazoFijoCount);
         // Validar que no se exceda el límite de una cuenta por tipo
         if (ahorroCount > 1) {
             return Mono.error(new IllegalArgumentException("El cliente ya tiene una cuenta de ahorro."));
@@ -156,6 +182,7 @@ public class ClientServiceImpl implements ClientService {
 
         // Validar que no se creen cuentas de ahorro o plazo fijo para clientes empresariales
         for (Account cuenta : lstAccounts) {
+
             String tipoCuentaNombre = cuenta.getAccountType().getNombre();
             if (tipoCuentaNombre.equals(Constants.CUENTA_AHORRO)) {
                 ahorroCount++;
@@ -186,8 +213,9 @@ public class ClientServiceImpl implements ClientService {
 
 
 private Mono<List<Account>> guardarCuentas(Client client, List<Account> lstAccounts, ObjectId objectId) {
-    lstAccounts.forEach(cuenta -> {
-        cuenta.setCliente_id(objectId);
+    logger.info("Guardando cuentas ={}");
+        lstAccounts.forEach(cuenta -> {
+        cuenta.setClienteId(objectId);
         cuenta.setAccountType(cuenta.getAccountType());
         cuenta.setClient(client);
     });

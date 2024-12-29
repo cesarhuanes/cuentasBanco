@@ -45,33 +45,10 @@ public class AccountController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
     @PostMapping
-    public Mono<ResponseEntity<Map<String, Object>>> guardarCuenta(@Valid @RequestBody Mono<Account> monoCuenta) {
-
-        Map<String, Object> respuesta = new HashMap<>();
-
-        return monoCuenta.flatMap(cuenta -> {
-            return accountService.createCuenta(cuenta).map(c -> {
-                respuesta.put("cuenta", c);
-                respuesta.put("mensaje", "Cuenta Guardado con Exito");
-                respuesta.put("timestamp", new Date());
-
-                return ResponseEntity.created(URI.create("/api/cuenta/".concat(String.valueOf(c.getId()))))
-                        .contentType(MediaType.APPLICATION_JSON_UTF8).body(respuesta);
-
-            });
-
-        }).onErrorResume(t -> {
-            return Mono.just(t).cast(WebExchangeBindException.class).flatMap(e -> Mono.just(e.getFieldErrors()))
-                    .flatMapMany(Flux::fromIterable)
-                    .map(fieldError -> "El campo:" + fieldError.getField() + "" + fieldError.getDefaultMessage())
-                    .collectList().flatMap(list -> {
-                        respuesta.put("cuenta", list);
-                        respuesta.put("timestamp", new Date());
-                        respuesta.put("status", HttpStatus.BAD_REQUEST.value());
-                        return Mono.just(ResponseEntity.badRequest().body(respuesta));
-                    });
-
-        });
+    public Mono<ResponseEntity<Account>> createAccount(@RequestBody Account account) {
+        return accountService.createCuenta(account)
+                .map(savedAccount -> ResponseEntity.status(200).body(savedAccount))
+                .defaultIfEmpty(ResponseEntity.badRequest().build());
     }
 
     @PutMapping("/{id}")

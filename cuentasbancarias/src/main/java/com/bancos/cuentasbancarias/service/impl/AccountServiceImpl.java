@@ -1,7 +1,10 @@
 package com.bancos.cuentasbancarias.service.impl;
 
 import com.bancos.cuentasbancarias.documents.Account;
+import com.bancos.cuentasbancarias.documents.AccountType;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
+import com.bancos.cuentasbancarias.repository.AccountTypeDAO;
+import com.bancos.cuentasbancarias.repository.ClientDAO;
 import com.bancos.cuentasbancarias.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -16,11 +19,25 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountDAO accountDAO;
     @Autowired
+    private AccountTypeDAO accountTypeDAO;
+    @Autowired
+    private ClientDAO clientDAO;
+    @Autowired
     private ReactiveMongoTemplate reactiveMongoTemplate;
 
     @Override
     public Mono<Account> createCuenta(Account account) {
-        return accountDAO.save(account);
+        return clientDAO.findById(account.getClienteId())
+                .flatMap(client -> {
+                    account.setClient(client);
+                    return accountTypeDAO.findById(account.getAccountTypeId())
+                            .map(accountType -> {
+                                account.setAccountType(accountType);
+                                return account;
+                            });
+
+                })
+                .flatMap(accountDAO::save);
     }
 
     @Override
@@ -41,11 +58,10 @@ public class AccountServiceImpl implements AccountService {
         ObjectId objectId=new ObjectId(id);
         return accountDAO.findById(objectId)
                 .flatMap(existeCuenta->{
-                   // existeCuenta.setId(cuenta.getId());
                     existeCuenta.setSaldo(account.getSaldo());
                     existeCuenta.setAccountType(account.getAccountType());
-                    existeCuenta.setCliente_id(account.getCliente_id());
-                    return accountDAO.save(existeCuenta);
+                    existeCuenta.setClienteId(account.getClienteId());
+                    return createCuenta(existeCuenta);
                 });
     }
 

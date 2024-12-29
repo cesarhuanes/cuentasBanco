@@ -15,11 +15,11 @@ public class Account {
     @Id
     private ObjectId id;
     private double saldo;
+
+    private ObjectId accountTypeId;
     private AccountType accountType;
 
-    @Field("cliente_id")
-    private ObjectId cliente_id;
-    @Transient
+    private ObjectId clienteId;
     private Client client;
 
     private List<Holder> titulares;
