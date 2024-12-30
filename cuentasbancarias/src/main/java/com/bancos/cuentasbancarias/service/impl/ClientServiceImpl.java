@@ -11,6 +11,7 @@ import com.bancos.cuentasbancarias.service.ClientService;
 import com.bancos.cuentasbancarias.util.Constants;
 
 import jakarta.validation.ValidationException;
+import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,20 +23,16 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@AllArgsConstructor
 @Service
 public class ClientServiceImpl implements ClientService {
     private static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
 
-    @Autowired
-   private ClientDAO clientDAO;
-   @Autowired
-   private AccountDAO accountDAO;
-   @Autowired
-   private ClientTypeDAO clientTypeDAO;
-   @Autowired
-   private AccountTypeDAO accountTypeDAO;
-    @Override
+   private final ClientDAO clientDAO;
+   private final AccountDAO accountDAO;
+   private final ClientTypeDAO clientTypeDAO;
+   private final AccountTypeDAO accountTypeDAO;
+
     public Flux<Client> findAll() {
         return clientDAO.findAll()
                 .flatMap(client -> clientTypeDAO.findById(client.getClientTypeId())
