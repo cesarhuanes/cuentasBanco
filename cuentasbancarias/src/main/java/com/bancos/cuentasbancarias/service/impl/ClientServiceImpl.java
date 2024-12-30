@@ -10,6 +10,7 @@ import com.bancos.cuentasbancarias.repository.ClientTypeDAO;
 import com.bancos.cuentasbancarias.service.ClientService;
 import com.bancos.cuentasbancarias.util.Constants;
 
+import jakarta.validation.ValidationException;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,106 +112,91 @@ public class ClientServiceImpl implements ClientService {
     }
 
     private Mono<Void> validarCuentasPersonales(Client client, List<Account> lstAccounts) {
-        long ahorroCount = client.getCuentas().stream()
-                .filter(cuentaId -> accountDAO.findById(cuentaId)
-                        .map(Account::getAccountType)
-                        .map((AccountType::getNombre))
-                        .block()
-                        .equals(Constants.CUENTA_AHORRO))
-                .count();
-        long corrienteCount = client.getCuentas().stream()
-                .filter(cuentaId -> accountDAO.findById(cuentaId)
-                        .map(Account::getAccountType)
-                        .map((AccountType::getNombre))
-                        .block()
-                        .equals(Constants.CUENTA_CORRIENTE))
-                .count();
-        long plazoFijoCount = client.getCuentas().stream()
-                .filter(cuentaId -> accountDAO.findById(cuentaId)
-                        .map(Account::getAccountType)
-                        .map((AccountType::getNombre))
-                        .block()
-                        .equals(Constants.PLAZO_FIJO))
-                .count();
+        Mono<Long> ahorroMonoCount = this.countAhorroAccounts(client);
+        Mono<Long> corrienteMonoCount = this.countCorrienteAccounts(client);
+        Mono<Long> plazoFijoMonoCount = this.countPlazoFijoAccounts(client);
 
         // Incluir las cuentas del parámetro lstAccounts en el conteo
         for (Account cuenta : lstAccounts) {
             switch (cuenta.getAccountType().getNombre()) {
                 case Constants.CUENTA_AHORRO:
-                    ahorroCount++;
+                    ahorroMonoCount=ahorroMonoCount.map(count -> count + 1);
                     break;
                 case Constants.CUENTA_CORRIENTE:
-                    corrienteCount++;
+                    corrienteMonoCount=corrienteMonoCount.map(count -> count + 1);
                     break;
                 case Constants.PLAZO_FIJO:
-                    plazoFijoCount++;
+                    plazoFijoMonoCount=plazoFijoMonoCount.map(count -> count + 1);
                     break;
             }
         }
-        logger.info("Cantidad de cuentas de ahorro ={} ",ahorroCount);
-        logger.info("Cantidad de cuentas de corriente ={} ",corrienteCount);
-        logger.info("Cantidad de cuentas de plazo fijo = {} ",plazoFijoCount);
-        // Validar que no se exceda el límite de una cuenta por tipo
-        if (ahorroCount > 1) {
-            return Mono.error(new IllegalArgumentException("El cliente ya tiene una cuenta de ahorro."));
-        }
-        if (corrienteCount > 1) {
-            return Mono.error(new IllegalArgumentException("El cliente ya tiene una cuenta corriente."));
-        }
-        if (plazoFijoCount > 1) {
-            return Mono.error(new IllegalArgumentException("El cliente ya tiene una cuenta de plazo fijo."));
-        }
+        return Mono.zip(ahorroMonoCount, corrienteMonoCount, plazoFijoMonoCount)
+                .flatMap(tuple -> {
+                    long ahorroCount = tuple.getT1();
+                    long corrienteCount = tuple.getT2();
+                    long plazoFijoCount = tuple.getT3();
 
-        return Mono.empty();
+                    logger.info("Cantidad de cuentas de ahorro = {}", ahorroCount);
+                    logger.info("Cantidad de cuentas de corriente = {}", corrienteCount);
+                    logger.info("Cantidad de cuentas de plazo fijo = {}", plazoFijoCount);
+
+                    // Validar que no se exceda el límite de una cuenta por tipo
+                    if (ahorroCount > 1) {
+                        return Mono.error(new  ValidationException("El cliente ya tiene una cuenta de ahorro."));
+                    }
+                    if (corrienteCount > 1) {
+                        return Mono.error(new  ValidationException("El cliente ya tiene una cuenta corriente."));
+                    }
+                    if (plazoFijoCount > 1) {
+                        return Mono.error(new ValidationException("El cliente ya tiene una cuenta de plazo fijo."));
+                    }
+
+                    return Mono.empty();
+                });
     }
     private Mono<Void> validarCuentasEmpresariales(Client client, List<Account> lstAccounts) {
         // Contar las cuentas existentes por tipo
-       long ahorroCount = client.getCuentas().stream()
-                .filter(cuentaId -> accountDAO.findById(cuentaId)
-                        .map(Account::getAccountType)
-                        .map((AccountType::getNombre))
-                        .block()
-                        .equals(Constants.CUENTA_AHORRO))
-                .count();
-        long plazoFijoCount = client.getCuentas().stream()
-                .filter(cuentaId -> accountDAO.findById(cuentaId)
-                        .map(Account::getAccountType)
-                        .map((AccountType::getNombre))
-                        .block()
-                        .equals(Constants.PLAZO_FIJO))
-                .count();
+        Mono<Long> ahorroMonoCount = this.countAhorroAccounts(client);
+        Mono<Long> plazoFijoMonoCount = this.countPlazoFijoAccounts(client);
 
         // Validar que no se creen cuentas de ahorro o plazo fijo para clientes empresariales
         for (Account cuenta : lstAccounts) {
 
             String tipoCuentaNombre = cuenta.getAccountType().getNombre();
             if (tipoCuentaNombre.equals(Constants.CUENTA_AHORRO)) {
-                ahorroCount++;
+                ahorroMonoCount=ahorroMonoCount.map(count -> count + 1);
             }
             if (tipoCuentaNombre.equals(Constants.PLAZO_FIJO)) {
-                plazoFijoCount++;
+                plazoFijoMonoCount=plazoFijoMonoCount.map(count -> count + 1);
             }
             // Verificar que cada cuenta corriente tenga al menos un titular
             if (tipoCuentaNombre.equals(Constants.CUENTA_CORRIENTE)) {
                 if (cuenta.getTitulares() == null || cuenta.getTitulares().isEmpty()) {
-                    return Mono.error(new IllegalArgumentException("Una cuenta empresarial debe tener al menos un titular."));
+                    return Mono.error(new ValidationException("Una cuenta empresarial debe tener al menos un titular."));
                 }
             }
         }
 
-        if (ahorroCount > 0) {
-            return Mono.error(new IllegalArgumentException("Un cliente empresarial no puede tener una cuenta de ahorro."));
-        }
-        if (plazoFijoCount > 0) {
-            return Mono.error(new IllegalArgumentException("Un cliente empresarial no puede tener una cuenta de plazo fijo."));
-        }
+        return Mono.zip(ahorroMonoCount, plazoFijoMonoCount)
+                .flatMap(tuple -> {
+                    long ahorroCount = tuple.getT1();
+                    long plazoFijoCount = tuple.getT2();
 
-        return Mono.empty();
+                    logger.info("Cantidad de cuentas de ahorro = {}", ahorroCount);
+                    logger.info("Cantidad de cuentas de plazo fijo = {}", plazoFijoCount);
+
+                    // Validar que no se exceda el límite de una cuenta por tipo
+                    if (ahorroCount > 0) {
+                        return Mono.error(new ValidationException("Un cliente empresarial no puede tener una cuenta de ahorro."));
+                    }
+                    if (plazoFijoCount > 0) {
+                        return Mono.error(new ValidationException("Un cliente empresarial no puede tener una cuenta de plazo fijo."));
+                    }
+
+                    return Mono.empty();
+                });
 
     }
-
-
-
 
 private Mono<List<Account>> guardarCuentas(Client client, List<Account> lstAccounts, ObjectId objectId) {
     logger.info("Guardando cuentas ={}");
@@ -230,5 +216,31 @@ private Mono<List<Account>> guardarCuentas(Client client, List<Account> lstAccou
                 return clientDAO.save(client).thenReturn(savedCuentas);
             });
 
+    }
+
+    private Mono<Long> countCorrienteAccounts(Client client) {
+        return Flux.fromIterable(client.getCuentas())
+                .flatMap(cuentaId -> accountDAO.findById(cuentaId)
+                        .map(Account::getAccountType)
+                        .map(AccountType::getNombre)
+                        .filter(nombre -> nombre.equals(Constants.CUENTA_CORRIENTE)))
+                .count();
+    }
+
+    private Mono<Long> countPlazoFijoAccounts(Client client) {
+        return Flux.fromIterable(client.getCuentas())
+                .flatMap(cuentaId -> accountDAO.findById(cuentaId)
+                        .map(Account::getAccountType)
+                        .map(AccountType::getNombre)
+                        .filter(nombre -> nombre.equals(Constants.PLAZO_FIJO)))
+                .count();
+    }
+    private Mono<Long> countAhorroAccounts(Client client) {
+        return Flux.fromIterable(client.getCuentas())
+                .flatMap(cuentaId -> accountDAO.findById(cuentaId)
+                        .map(Account::getAccountType)
+                        .map(AccountType::getNombre)
+                        .filter(nombre -> nombre.equals(Constants.CUENTA_AHORRO)))
+                .count();
     }
 }

@@ -64,7 +64,10 @@ public class ClientController {
     }
 
     @PostMapping("/{clienteId}/agregarCuentas")
-    public Mono<List<Account>> agregarCuentasCliente(@PathVariable String clienteId, @RequestBody List<Account> lstAccounts) {
-        return clientService.saveCuentaByCliente(clienteId, lstAccounts);
+    public Mono<ResponseEntity<List<Account>>> agregarCuentasCliente(@PathVariable String clienteId, @RequestBody List<Account> lstAccounts) {
+        return clientService.saveCuentaByCliente(clienteId, lstAccounts)
+                .map(savedccounts -> ResponseEntity.status(HttpStatus.OK).body(savedccounts))
+                .defaultIfEmpty(ResponseEntity.badRequest().build());
+
     }
 }
