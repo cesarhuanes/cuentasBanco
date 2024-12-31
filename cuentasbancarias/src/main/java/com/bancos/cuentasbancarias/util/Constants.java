@@ -7,4 +7,7 @@ public class Constants {
 
     public static final String TIPO_CLIENTE_PERSONA="PERSONA";
     public static final String TIPO_CLIENTE_EMPRESA="EMPRESA";
+
+    public static final String DEPOSITO="DEPOSITO";
+    public static final String RETIRO="RETIRO";
 }
