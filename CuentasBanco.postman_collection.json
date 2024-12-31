@@ -11,9 +11,21 @@
 			"item": [
 				{
 					"name": "ListadoCuentas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8585/api/cuenta",
 							"protocol": "http",
@@ -36,7 +48,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {      \r\n        \"saldo\": \"8500\",\r\n        \"accountType\": \"PLAZO_FIJO\",\r\n        \"cliente_id\":\"6765aaf2802ebb426295737a\"\r\n}",
+							"raw": " {      \r\n        \"saldo\": \"70000\",\r\n        \"accountTypeId\":\"676f55bd81c6c2442287d2f0\",\r\n        \"clienteId\":\"676f73a84f73263e2ed6f668\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -65,7 +77,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {      \r\n        \"saldo\": \"8521\",\r\n        \"accountType\": \"PLAZO_FIJO\",\r\n        \"cliente_id\":\"6765aaf2802ebb426295737a\"\r\n}",
+							"raw": " {      \r\n        \"saldo\": \"200000\",\r\n        \"accountTypeId\":\"676f55b481c6c2442287d2ef\",\r\n        \"clienteId\":\"676f73d34f73263e2ed6f66c\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -73,7 +85,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8585/api/cuenta/6765b9bee62f7c25a3ac022f",
+							"raw": "http://localhost:8585/api/cuenta/6771c8f1df0619255b240e8d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -82,7 +94,7 @@
 							"path": [
 								"api",
 								"cuenta",
-								"6765b9bee62f7c25a3ac022f"
+								"6771c8f1df0619255b240e8d"
 							]
 						}
 					},
@@ -94,7 +106,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8585/api/cuenta/67648f77c4a2e647248c094a",
+							"raw": "http://localhost:8585/api/cuenta/6771c8ffdf0619255b240e8e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -103,7 +115,7 @@
 							"path": [
 								"api",
 								"cuenta",
-								"67648f77c4a2e647248c094a"
+								"6771c8ffdf0619255b240e8e"
 							]
 						}
 					},
@@ -152,7 +164,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8585/api/clientes/676484f08345db6b5443219f",
+							"raw": "http://localhost:8585/api/clientes/676f73b34f73263e2ed6f669",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -161,7 +173,7 @@
 							"path": [
 								"api",
 								"clientes",
-								"676484f08345db6b5443219f"
+								"676f73b34f73263e2ed6f669"
 							]
 						}
 					},
@@ -174,7 +186,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\r\n        \"nombre\": \"Belen Pinedo chamaya\",\r\n        \"tipo\": \"empresarial\"\r\n}",
+							"raw": " {\r\n        \"nombre\": \"PINEDO DIAZ BELEN\",\r\n        \"clientTypeId\": \"676f564c81c6c2442287d2f3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -182,7 +194,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8585/api/clientes/676484f08345db6b5443219f",
+							"raw": "http://localhost:8585/api/clientes/676f73b34f73263e2ed6f669",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -191,7 +203,7 @@
 							"path": [
 								"api",
 								"clientes",
-								"676484f08345db6b5443219f"
+								"676f73b34f73263e2ed6f669"
 							]
 						}
 					},
@@ -203,7 +215,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8585/api/clientes/67648bed787d390db307997c",
+							"raw": "http://localhost:8585/api/clientes/676f73db4f73263e2ed6f66d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -212,7 +224,7 @@
 							"path": [
 								"api",
 								"clientes",
-								"67648bed787d390db307997c"
+								"676f73db4f73263e2ed6f66d"
 							]
 						}
 					},
@@ -225,7 +237,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {      \r\n        \"nombre\": \"CESAR HUANES\",\r\n        \"clientType\": \"EMPRESARIAL\"\r\n}",
+							"raw": " {      \r\n        \"nombre\": \"GLOBAL HITSS\",\r\n         \"clientTypeId\": \"676f565581c6c2442287d2f4\"\r\n         \r\n  \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -254,7 +266,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {   \r\n        \"saldo\": 3000.0,\r\n        \"accountType\": \"CORRIENTE\"\r\n    },\r\n    {   \r\n        \"saldo\": 500.0,\r\n        \"accountType\": \"CORRIENTE\"  \r\n    }\r\n]",
+							"raw": "[\r\n    {   \r\n        \"saldo\": \"25000\",\r\n        \"accountTypeId\":\"676f55b481c6c2442287d2ef\",\r\n        \"clienteId\":\"676f73d34f73263e2ed6f66c\",\r\n        \"titulares\":[\r\n            {\r\n                \"id\": \"6772192f849ede3b26d0e517\"\r\n               \r\n             }\r\n         ],\r\n         \"firmantesAutorizados\":[\r\n            {\r\n                \"id\": \"6772199a849ede3b26d0e51b\"\r\n                \r\n             }\r\n         ]\r\n    }\r\n   \r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -262,7 +274,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8585/api/clientes/6765dd3cbb3e3d5c5c90c859/agregarCuentas",
+							"raw": "http://localhost:8585/api/clientes/676f73d34f73263e2ed6f66c/agregarCuentas",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -271,8 +283,260 @@
 							"path": [
 								"api",
 								"clientes",
-								"6765dd3cbb3e3d5c5c90c859",
+								"676f73d34f73263e2ed6f66c",
 								"agregarCuentas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tipos",
+			"item": [
+				{
+					"name": "Guarda Tipo cuentas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"PLAZO_FIJO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/accountType",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"accountType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Guarda Tipo Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"EMPRESA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/clientType",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"clientType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Guarda Titular",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"titular 4\",\r\n    \"documentoIdentidad\":\"77569823\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/holder",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"holder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Guarda Firmante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"firmante 4\",\r\n    \"documentoIdentidad\":\"86541200\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/signature",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"signature"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Guarda TipoCredito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombreCredito\":\"TARJETA_CREDITO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/creditType",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"creditType"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "credito",
+			"item": [
+				{
+					"name": "guardar credito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\":120000,\r\n    \"amountAviable\":120000,\r\n    \"creditTypeId\":\"677343000ce0f43c1e4ba8e0\",\r\n    \"clientId\":\"676f73a84f73263e2ed6f668\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/credit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"credit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movimiento",
+			"item": [
+				{
+					"name": "guarda movimiento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dateMovement\":\"2024-12-31T11:50:40Z\",\r\n    \"amount\":\"14598\",\r\n    \"typeMovement\":\"DEPOSITO\",\r\n    \"accountId\":\"6771c8ffdf0619255b240e8e\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/movement",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"movement"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagos",
+			"item": [
+				{
+					"name": "guarda pagos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"datePay\":\"2024-12-31T14:50:40Z\",\r\n    \"amount\":\"300\",\r\n    \"creditId\":\"67744d288caeaa468e77ec13\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/pay",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"pay"
 							]
 						}
 					},

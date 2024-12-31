@@ -11,6 +11,7 @@ public class Credit {
     private ObjectId id;
 
     private double amount;//monto
+    private double amountAviable;//saldo disponible
 
     private ObjectId creditTypeId;
     private CreditType creditType;
