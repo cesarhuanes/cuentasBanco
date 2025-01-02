@@ -1,25 +1,96 @@
 [{
   "_id": {
-    "$oid": "6765e49a82455a2245178883"
+    "$oid": "676f73a84f73263e2ed6f668"
   },
-  "nombre": "BELEN PINEDO",
-  "clientType": "PERSONAL",
+  "nombre": "CESAR HUANES",
+  "clientTypeId": {
+    "$oid": "676f564c81c6c2442287d2f3"
+  },
+  "clientType": {
+    "_id": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "nombre": "PERSONA"
+  },
   "id": [],
-  "_class": "com.bancos.cuentasbancarias.documents.Cliente"
+  "_class": "com.bancos.cuentasbancarias.documents.Client"
 },
 {
   "_id": {
-    "$oid": "6765e4b182455a2245178884"
+    "$oid": "676f73b34f73263e2ed6f669"
   },
-  "nombre": "CESAR HUANES",
-  "clientType": "EMPRESARIAL",
+  "nombre": "PINEDO DIAZ BELEN",
+  "clientTypeId": {
+    "$oid": "676f564c81c6c2442287d2f3"
+  },
+  "clientType": {
+    "_id": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "nombre": "PERSONA"
+  },
   "id": [
     {
-      "$oid": "6765e4fb82455a2245178885"
-    },
-    {
-      "$oid": "6765e4fb82455a2245178886"
+      "$oid": "6771de40a67bb55764e7c428"
     }
   ],
-  "_class": "com.bancos.cuentasbancarias.documents.Cliente"
+  "_class": "com.bancos.cuentasbancarias.documents.Client"
+},
+{
+  "_id": {
+    "$oid": "676f73ba4f73263e2ed6f66a"
+  },
+  "nombre": "CARLOS HUANES",
+  "clientTypeId": {
+    "$oid": "676f564c81c6c2442287d2f3"
+  },
+  "clientType": {
+    "_id": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "nombre": "PERSONA"
+  },
+  "id": [],
+  "_class": "com.bancos.cuentasbancarias.documents.Client"
+},
+{
+  "_id": {
+    "$oid": "676f73cb4f73263e2ed6f66b"
+  },
+  "nombre": "NTTDATA ",
+  "clientTypeId": {
+    "$oid": "676f565581c6c2442287d2f4"
+  },
+  "clientType": {
+    "_id": {
+      "$oid": "676f565581c6c2442287d2f4"
+    },
+    "nombre": "EMPRESA"
+  },
+  "id": [],
+  "_class": "com.bancos.cuentasbancarias.documents.Client"
+},
+{
+  "_id": {
+    "$oid": "676f73d34f73263e2ed6f66c"
+  },
+  "nombre": "INDRA",
+  "clientTypeId": {
+    "$oid": "676f565581c6c2442287d2f4"
+  },
+  "clientType": {
+    "_id": {
+      "$oid": "676f565581c6c2442287d2f4"
+    },
+    "nombre": "EMPRESA"
+  },
+  "id": [
+    {
+      "$oid": "6773280424436f06915e3d77"
+    },
+    {
+      "$oid": "67732a2d24436f06915e3d78"
+    }
+  ],
+  "_class": "com.bancos.cuentasbancarias.documents.Client"
 }]

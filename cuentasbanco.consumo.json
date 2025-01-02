@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "6776f70e1f21b33e63f118f6"
+  },
+  "dateConsumption": {
+    "$date": "2025-01-02T11:50:40.000Z"
+  },
+  "amountConsumption": 2800,
+  "creditCardId": {
+    "$oid": "6776ef3c0754447cdde934aa"
+  },
+  "creditCard": {
+    "_id": {
+      "$oid": "6776ef3c0754447cdde934aa"
+    },
+    "limitCredit": 30000,
+    "amountAviable": 27200,
+    "clientId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Consumption"
+}]

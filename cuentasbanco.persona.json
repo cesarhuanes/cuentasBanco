@@ -1,0 +1,64 @@
+[{
+  "_id": {
+    "$oid": "6772192f849ede3b26d0e517"
+  },
+  "nombre": "titular 1",
+  "documentoIdentidad": "45986200",
+  "_class": "com.bancos.cuentasbancarias.documents.Holder"
+},
+{
+  "_id": {
+    "$oid": "67721939849ede3b26d0e518"
+  },
+  "nombre": "titular 2",
+  "documentoIdentidad": "41754214",
+  "_class": "com.bancos.cuentasbancarias.documents.Holder"
+},
+{
+  "_id": {
+    "$oid": "67721943849ede3b26d0e519"
+  },
+  "nombre": "titular 3",
+  "documentoIdentidad": "08081442",
+  "_class": "com.bancos.cuentasbancarias.documents.Holder"
+},
+{
+  "_id": {
+    "$oid": "67721953849ede3b26d0e51a"
+  },
+  "nombre": "titular 4",
+  "documentoIdentidad": "77569823",
+  "_class": "com.bancos.cuentasbancarias.documents.Holder"
+},
+{
+  "_id": {
+    "$oid": "6772199a849ede3b26d0e51b"
+  },
+  "nombre": "firmante 1",
+  "documentoIdentidad": "77784621",
+  "_class": "com.bancos.cuentasbancarias.documents.Signature"
+},
+{
+  "_id": {
+    "$oid": "677219a5849ede3b26d0e51c"
+  },
+  "nombre": "firmante 2",
+  "documentoIdentidad": "58964201",
+  "_class": "com.bancos.cuentasbancarias.documents.Signature"
+},
+{
+  "_id": {
+    "$oid": "677219b4849ede3b26d0e51d"
+  },
+  "nombre": "firmante 3",
+  "documentoIdentidad": "45632108",
+  "_class": "com.bancos.cuentasbancarias.documents.Signature"
+},
+{
+  "_id": {
+    "$oid": "677219bf849ede3b26d0e51e"
+  },
+  "nombre": "firmante 4",
+  "documentoIdentidad": "86541200",
+  "_class": "com.bancos.cuentasbancarias.documents.Signature"
+}]

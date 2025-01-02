@@ -1,0 +1,144 @@
+[{
+  "_id": {
+    "$oid": "67744fedd0a46e506e096658"
+  },
+  "datePay": {
+    "$date": "2024-12-31T13:50:40.000Z"
+  },
+  "amount": 1500,
+  "creditId": {
+    "$oid": "67744d288caeaa468e77ec13"
+  },
+  "credit": {
+    "_id": {
+      "$oid": "67744d288caeaa468e77ec13"
+    },
+    "amount": 80000,
+    "amountAviable": 75000,
+    "creditTypeId": {
+      "$oid": "677342f90ce0f43c1e4ba8df"
+    },
+    "creditType": {
+      "_id": {
+        "$oid": "677342f90ce0f43c1e4ba8df"
+      },
+      "nombreCredito": "PERSONAL"
+    },
+    "clientId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Payment"
+},
+{
+  "_id": {
+    "$oid": "6774500bd0a46e506e096659"
+  },
+  "datePay": {
+    "$date": "2024-12-31T14:50:40.000Z"
+  },
+  "amount": 1000,
+  "creditId": {
+    "$oid": "67744d288caeaa468e77ec13"
+  },
+  "credit": {
+    "_id": {
+      "$oid": "67744d288caeaa468e77ec13"
+    },
+    "amount": 80000,
+    "amountAviable": 75000,
+    "creditTypeId": {
+      "$oid": "677342f90ce0f43c1e4ba8df"
+    },
+    "creditType": {
+      "_id": {
+        "$oid": "677342f90ce0f43c1e4ba8df"
+      },
+      "nombreCredito": "PERSONAL"
+    },
+    "clientId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Payment"
+},
+{
+  "_id": {
+    "$oid": "6774502ed0a46e506e09665a"
+  },
+  "datePay": {
+    "$date": "2024-12-31T14:50:40.000Z"
+  },
+  "amount": 300,
+  "creditId": {
+    "$oid": "67744d288caeaa468e77ec13"
+  },
+  "credit": {
+    "_id": {
+      "$oid": "67744d288caeaa468e77ec13"
+    },
+    "amount": 80000,
+    "amountAviable": 75000,
+    "creditTypeId": {
+      "$oid": "677342f90ce0f43c1e4ba8df"
+    },
+    "creditType": {
+      "_id": {
+        "$oid": "677342f90ce0f43c1e4ba8df"
+      },
+      "nombreCredito": "PERSONAL"
+    },
+    "clientId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Payment"
+}]

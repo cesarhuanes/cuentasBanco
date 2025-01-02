@@ -1,0 +1,148 @@
+[{
+  "_id": {
+    "$oid": "67744d288caeaa468e77ec13"
+  },
+  "amount": 80000,
+  "amountAviable": 75000,
+  "creditTypeId": {
+    "$oid": "677342f90ce0f43c1e4ba8df"
+  },
+  "creditType": {
+    "_id": {
+      "$oid": "677342f90ce0f43c1e4ba8df"
+    },
+    "nombreCredito": "PERSONAL"
+  },
+  "clientId": {
+    "$oid": "676f73a84f73263e2ed6f668"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "nombre": "CESAR HUANES",
+    "clientTypeId": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "nombre": "PERSONA"
+    },
+    "id": []
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Credit"
+},
+{
+  "_id": {
+    "$oid": "67744d3f8caeaa468e77ec14"
+  },
+  "amount": 120000,
+  "amountAviable": 120000,
+  "creditTypeId": {
+    "$oid": "677343000ce0f43c1e4ba8e0"
+  },
+  "creditType": {
+    "_id": {
+      "$oid": "677343000ce0f43c1e4ba8e0"
+    },
+    "nombreCredito": "EMPRESARIAL"
+  },
+  "clientId": {
+    "$oid": "676f73a84f73263e2ed6f668"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "nombre": "CESAR HUANES",
+    "clientTypeId": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "nombre": "PERSONA"
+    },
+    "id": []
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Credit"
+},
+{
+  "_id": {
+    "$oid": "6776ef3d0754447cdde934ab"
+  },
+  "amount": 30000,
+  "amountAviable": 30000,
+  "creditTypeId": {
+    "$oid": "677343130ce0f43c1e4ba8e1"
+  },
+  "creditType": {
+    "_id": {
+      "$oid": "677343130ce0f43c1e4ba8e1"
+    },
+    "nombreCredito": "TARJETA_CREDITO"
+  },
+  "clientId": {
+    "$oid": "676f73a84f73263e2ed6f668"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "nombre": "CESAR HUANES",
+    "clientTypeId": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "nombre": "PERSONA"
+    },
+    "id": []
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Credit"
+},
+{
+  "_id": {
+    "$oid": "6776efdf0754447cdde934ac"
+  },
+  "amount": 10000,
+  "amountAviable": 10000,
+  "creditTypeId": {
+    "$oid": "677342f90ce0f43c1e4ba8df"
+  },
+  "creditType": {
+    "_id": {
+      "$oid": "677342f90ce0f43c1e4ba8df"
+    },
+    "nombreCredito": "PERSONAL"
+  },
+  "clientId": {
+    "$oid": "676f73b34f73263e2ed6f669"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73b34f73263e2ed6f669"
+    },
+    "nombre": "PINEDO DIAZ BELEN",
+    "clientTypeId": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "nombre": "PERSONA"
+    },
+    "id": [
+      {
+        "$oid": "6771de40a67bb55764e7c428"
+      }
+    ]
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Credit"
+}]

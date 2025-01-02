@@ -1,22 +1,228 @@
 [{
   "_id": {
-    "$oid": "6765e4fb82455a2245178885"
+    "$oid": "6771c8f1df0619255b240e8d"
   },
-  "saldo": 3000,
-  "accountType": "CORRIENTE",
-  "cliente_id": {
-    "$oid": "6765e4b182455a2245178884"
+  "saldo": 200000,
+  "accountTypeId": {
+    "$oid": "676f555f81c6c2442287d2ee"
   },
-  "_class": "com.bancos.cuentasbancarias.documents.Cuenta"
+  "accountType": {
+    "_id": {
+      "$oid": "676f555f81c6c2442287d2ee"
+    },
+    "nombre": "CUENTA_AHORRO"
+  },
+  "clienteId": {
+    "$oid": "676f73d34f73263e2ed6f66c"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73d34f73263e2ed6f66c"
+    },
+    "nombre": "INDRA",
+    "clientTypeId": {
+      "$oid": "676f565581c6c2442287d2f4"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f565581c6c2442287d2f4"
+      },
+      "nombre": "EMPRESA"
+    },
+    "id": []
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Account"
 },
 {
   "_id": {
-    "$oid": "6765e4fb82455a2245178886"
+    "$oid": "6771c8ffdf0619255b240e8e"
   },
-  "saldo": 500,
-  "accountType": "CORRIENTE",
-  "cliente_id": {
-    "$oid": "6765e4b182455a2245178884"
+  "saldo": 984549,
+  "accountTypeId": {
+    "$oid": "676f55b481c6c2442287d2ef"
   },
-  "_class": "com.bancos.cuentasbancarias.documents.Cuenta"
+  "accountType": {
+    "_id": {
+      "$oid": "676f55b481c6c2442287d2ef"
+    },
+    "nombre": "CUENTA_CORRIENTE"
+  },
+  "clienteId": {
+    "$oid": "676f73a84f73263e2ed6f668"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "nombre": "CESAR HUANES",
+    "clientTypeId": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "nombre": "PERSONA"
+    },
+    "id": []
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Account"
+},
+{
+  "_id": {
+    "$oid": "6771c913df0619255b240e8f"
+  },
+  "saldo": 70000,
+  "accountTypeId": {
+    "$oid": "676f55bd81c6c2442287d2f0"
+  },
+  "accountType": {
+    "_id": {
+      "$oid": "676f55bd81c6c2442287d2f0"
+    },
+    "nombre": "PLAZO_FIJO"
+  },
+  "clienteId": {
+    "$oid": "676f73a84f73263e2ed6f668"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "nombre": "CESAR HUANES",
+    "clientTypeId": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "nombre": "PERSONA"
+    },
+    "id": []
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Account"
+},
+{
+  "_id": {
+    "$oid": "6771de40a67bb55764e7c428"
+  },
+  "saldo": 120000,
+  "accountTypeId": {
+    "$oid": "676f555f81c6c2442287d2ee"
+  },
+  "accountType": {
+    "_id": {
+      "$oid": "676f555f81c6c2442287d2ee"
+    },
+    "nombre": "CUENTA_AHORRO"
+  },
+  "clienteId": {
+    "$oid": "676f73b34f73263e2ed6f669"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73b34f73263e2ed6f669"
+    },
+    "nombre": "PINEDO DIAZ BELEN",
+    "clientTypeId": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "nombre": "PERSONA"
+    },
+    "id": []
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Account"
+},
+{
+  "_id": {
+    "$oid": "67732a2d24436f06915e3d78"
+  },
+  "saldo": 25000,
+  "accountTypeId": {
+    "$oid": "676f55b481c6c2442287d2ef"
+  },
+  "accountType": {
+    "_id": {
+      "$oid": "676f55b481c6c2442287d2ef"
+    },
+    "nombre": "CUENTA_CORRIENTE"
+  },
+  "clienteId": {
+    "$oid": "676f73d34f73263e2ed6f66c"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73d34f73263e2ed6f66c"
+    },
+    "nombre": "INDRA",
+    "clientTypeId": {
+      "$oid": "676f565581c6c2442287d2f4"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f565581c6c2442287d2f4"
+      },
+      "nombre": "EMPRESA"
+    },
+    "id": [
+      {
+        "$oid": "6773280424436f06915e3d77"
+      }
+    ]
+  },
+  "titulares": [
+    {
+      "_id": {
+        "$oid": "6772192f849ede3b26d0e517"
+      }
+    }
+  ],
+  "firmantesAutorizados": [
+    {
+      "_id": {
+        "$oid": "6772199a849ede3b26d0e51b"
+      }
+    }
+  ],
+  "_class": "com.bancos.cuentasbancarias.documents.Account"
+},
+{
+  "_id": {
+    "$oid": "6776da3eb1b0d221de62f3e7"
+  },
+  "saldo": 83000,
+  "accountTypeId": {
+    "$oid": "676f555f81c6c2442287d2ee"
+  },
+  "accountType": {
+    "_id": {
+      "$oid": "676f555f81c6c2442287d2ee"
+    },
+    "nombre": "CUENTA_AHORRO"
+  },
+  "clienteId": {
+    "$oid": "676f73a84f73263e2ed6f668"
+  },
+  "client": {
+    "_id": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "nombre": "CESAR HUANES",
+    "clientTypeId": {
+      "$oid": "676f564c81c6c2442287d2f3"
+    },
+    "clientType": {
+      "_id": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "nombre": "PERSONA"
+    },
+    "id": []
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Account"
 }]

@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "676f564c81c6c2442287d2f3"
+  },
+  "nombre": "PERSONA",
+  "_class": "com.bancos.cuentasbancarias.documents.ClientType"
+},
+{
+  "_id": {
+    "$oid": "676f565581c6c2442287d2f4"
+  },
+  "nombre": "EMPRESA",
+  "_class": "com.bancos.cuentasbancarias.documents.ClientType"
+}]

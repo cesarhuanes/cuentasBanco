@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "676f555f81c6c2442287d2ee"
+  },
+  "nombre": "CUENTA_AHORRO",
+  "_class": "com.bancos.cuentasbancarias.documents.AccountType"
+},
+{
+  "_id": {
+    "$oid": "676f55b481c6c2442287d2ef"
+  },
+  "nombre": "CUENTA_CORRIENTE",
+  "_class": "com.bancos.cuentasbancarias.documents.AccountType"
+},
+{
+  "_id": {
+    "$oid": "676f55bd81c6c2442287d2f0"
+  },
+  "nombre": "PLAZO_FIJO",
+  "_class": "com.bancos.cuentasbancarias.documents.AccountType"
+}]

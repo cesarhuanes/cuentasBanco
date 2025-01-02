@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "677342f90ce0f43c1e4ba8df"
+  },
+  "nombreCredito": "PERSONAL",
+  "_class": "com.bancos.cuentasbancarias.documents.CreditType"
+},
+{
+  "_id": {
+    "$oid": "677343000ce0f43c1e4ba8e0"
+  },
+  "nombreCredito": "EMPRESARIAL",
+  "_class": "com.bancos.cuentasbancarias.documents.CreditType"
+},
+{
+  "_id": {
+    "$oid": "677343130ce0f43c1e4ba8e1"
+  },
+  "nombreCredito": "TARJETA_CREDITO",
+  "_class": "com.bancos.cuentasbancarias.documents.CreditType"
+}]

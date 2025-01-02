@@ -1,0 +1,336 @@
+[{
+  "_id": {
+    "$oid": "67741ee363122a2ae3516951"
+  },
+  "dateMovement": {
+    "$date": "2024-12-31T11:50:40.000Z"
+  },
+  "amount": 10000,
+  "typeMovement": "DEPOSITO",
+  "accountId": {
+    "$oid": "6771c8ffdf0619255b240e8e"
+  },
+  "account": {
+    "_id": {
+      "$oid": "6771c8ffdf0619255b240e8e"
+    },
+    "saldo": 973500,
+    "accountTypeId": {
+      "$oid": "676f55b481c6c2442287d2ef"
+    },
+    "accountType": {
+      "_id": {
+        "$oid": "676f55b481c6c2442287d2ef"
+      },
+      "nombre": "CUENTA_CORRIENTE"
+    },
+    "clienteId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Movement"
+},
+{
+  "_id": {
+    "$oid": "67741f0163122a2ae3516952"
+  },
+  "dateMovement": {
+    "$date": "2024-12-31T11:50:40.000Z"
+  },
+  "amount": 500,
+  "typeMovement": "RETIRO",
+  "accountId": {
+    "$oid": "6771c8ffdf0619255b240e8e"
+  },
+  "account": {
+    "_id": {
+      "$oid": "6771c8ffdf0619255b240e8e"
+    },
+    "saldo": 973000,
+    "accountTypeId": {
+      "$oid": "676f55b481c6c2442287d2ef"
+    },
+    "accountType": {
+      "_id": {
+        "$oid": "676f55b481c6c2442287d2ef"
+      },
+      "nombre": "CUENTA_CORRIENTE"
+    },
+    "clienteId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Movement"
+},
+{
+  "_id": {
+    "$oid": "67741f3063122a2ae3516953"
+  },
+  "dateMovement": {
+    "$date": "2024-12-31T11:50:40.000Z"
+  },
+  "amount": 4589,
+  "typeMovement": "RETIRO",
+  "accountId": {
+    "$oid": "6771c8ffdf0619255b240e8e"
+  },
+  "account": {
+    "_id": {
+      "$oid": "6771c8ffdf0619255b240e8e"
+    },
+    "saldo": 968411,
+    "accountTypeId": {
+      "$oid": "676f55b481c6c2442287d2ef"
+    },
+    "accountType": {
+      "_id": {
+        "$oid": "676f55b481c6c2442287d2ef"
+      },
+      "nombre": "CUENTA_CORRIENTE"
+    },
+    "clienteId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Movement"
+},
+{
+  "_id": {
+    "$oid": "67741f4863122a2ae3516954"
+  },
+  "dateMovement": {
+    "$date": "2024-12-31T11:50:40.000Z"
+  },
+  "amount": 1540,
+  "typeMovement": "DEPOSITO",
+  "accountId": {
+    "$oid": "6771c8ffdf0619255b240e8e"
+  },
+  "account": {
+    "_id": {
+      "$oid": "6771c8ffdf0619255b240e8e"
+    },
+    "saldo": 969951,
+    "accountTypeId": {
+      "$oid": "676f55b481c6c2442287d2ef"
+    },
+    "accountType": {
+      "_id": {
+        "$oid": "676f55b481c6c2442287d2ef"
+      },
+      "nombre": "CUENTA_CORRIENTE"
+    },
+    "clienteId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Movement"
+},
+{
+  "_id": {
+    "$oid": "67741f5063122a2ae3516955"
+  },
+  "dateMovement": {
+    "$date": "2024-12-31T11:50:40.000Z"
+  },
+  "amount": 14598,
+  "typeMovement": "DEPOSITO",
+  "accountId": {
+    "$oid": "6771c8ffdf0619255b240e8e"
+  },
+  "account": {
+    "_id": {
+      "$oid": "6771c8ffdf0619255b240e8e"
+    },
+    "saldo": 984549,
+    "accountTypeId": {
+      "$oid": "676f55b481c6c2442287d2ef"
+    },
+    "accountType": {
+      "_id": {
+        "$oid": "676f55b481c6c2442287d2ef"
+      },
+      "nombre": "CUENTA_CORRIENTE"
+    },
+    "clienteId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Movement"
+},
+{
+  "_id": {
+    "$oid": "6776dac8b1b0d221de62f3e8"
+  },
+  "dateMovement": {
+    "$date": "2025-01-02T11:50:40.000Z"
+  },
+  "amount": 3000,
+  "typeMovement": "DEPOSITO",
+  "accountId": {
+    "$oid": "6776da3eb1b0d221de62f3e7"
+  },
+  "account": {
+    "_id": {
+      "$oid": "6776da3eb1b0d221de62f3e7"
+    },
+    "saldo": 88000,
+    "accountTypeId": {
+      "$oid": "676f555f81c6c2442287d2ee"
+    },
+    "accountType": {
+      "_id": {
+        "$oid": "676f555f81c6c2442287d2ee"
+      },
+      "nombre": "CUENTA_AHORRO"
+    },
+    "clienteId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Movement"
+},
+{
+  "_id": {
+    "$oid": "6776db3bb1b0d221de62f3e9"
+  },
+  "dateMovement": {
+    "$date": "2025-01-02T12:50:40.000Z"
+  },
+  "amount": 5000,
+  "typeMovement": "RETIRO",
+  "accountId": {
+    "$oid": "6776da3eb1b0d221de62f3e7"
+  },
+  "account": {
+    "_id": {
+      "$oid": "6776da3eb1b0d221de62f3e7"
+    },
+    "saldo": 83000,
+    "accountTypeId": {
+      "$oid": "676f555f81c6c2442287d2ee"
+    },
+    "accountType": {
+      "_id": {
+        "$oid": "676f555f81c6c2442287d2ee"
+      },
+      "nombre": "CUENTA_AHORRO"
+    },
+    "clienteId": {
+      "$oid": "676f73a84f73263e2ed6f668"
+    },
+    "client": {
+      "_id": {
+        "$oid": "676f73a84f73263e2ed6f668"
+      },
+      "nombre": "CESAR HUANES",
+      "clientTypeId": {
+        "$oid": "676f564c81c6c2442287d2f3"
+      },
+      "clientType": {
+        "_id": {
+          "$oid": "676f564c81c6c2442287d2f3"
+        },
+        "nombre": "PERSONA"
+      },
+      "id": []
+    }
+  },
+  "_class": "com.bancos.cuentasbancarias.documents.Movement"
+}]
