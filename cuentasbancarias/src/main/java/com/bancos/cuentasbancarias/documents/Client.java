@@ -26,4 +26,7 @@ public class Client {
 
     @Field("id")
     private List<ObjectId> cuentas=new ArrayList<>();
+
+    private  Perfil perfil;
+
 }

@@ -1,4 +1,5 @@
 package com.bancos.cuentasbancarias.documents;
 
-public class TarjetaCredito {
+public enum Perfil {
+    VIP,PYME
 }
