@@ -1,8 +1,11 @@
 package com.bancos.cuentasbancarias.controller;
 
+import com.bancos.cuentasbancarias.MovementDTO;
 import com.bancos.cuentasbancarias.documents.Account;
 import com.bancos.cuentasbancarias.service.AccountService;
+import com.bancos.cuentasbancarias.service.MovementService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,22 +21,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@Slf4j
+
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/cuenta")
+@RequestMapping("/api/account")
 public class AccountController {
 
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
+    private final MovementService movementService;
 
     @GetMapping()
     public Mono<ResponseEntity<List<Account>>> getAllAccounts() {
-        log.info("CuentaController.getAllAccounts");
         return accountService.getAllCuentas()
                 .collectList()
                 .map(ResponseEntity::ok);
     }
-
 
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Account>>  getCuenta(@PathVariable String id){
@@ -68,8 +70,14 @@ public class AccountController {
 
     }
 
+    @GetMapping("/{accountId}/balance")
+    public Mono<Double> getAccountBalance(@PathVariable String accountId) {
+        return accountService.getAccountBalance(accountId);
+    }
 
-
-
+    @GetMapping("/{accountId}/movements")
+    public Flux<MovementDTO> getMovementsByAccountId(@PathVariable String accountId) {
+        return movementService.getMovementsByAccountId(accountId);
+    }
 
 }

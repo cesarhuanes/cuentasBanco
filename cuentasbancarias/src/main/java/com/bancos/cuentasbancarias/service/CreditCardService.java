@@ -6,4 +6,6 @@ import reactor.core.publisher.Mono;
 public interface CreditCardService {
 
     Mono<CreditCard> saveCreditCard(CreditCard creditCard);
-}
+    Mono<Double> getCreditCardBalance(String creditCardId) ;
+
+    }

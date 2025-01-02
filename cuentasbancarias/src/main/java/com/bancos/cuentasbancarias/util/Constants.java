@@ -10,4 +10,6 @@ public class Constants {
 
     public static final String DEPOSITO="DEPOSITO";
     public static final String RETIRO="RETIRO";
+
+    public static final String TARJETA_CREDITO="TARJETA_CREDITO";
 }

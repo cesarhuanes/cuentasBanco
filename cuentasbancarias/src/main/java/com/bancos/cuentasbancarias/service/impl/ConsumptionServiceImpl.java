@@ -3,6 +3,7 @@ package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.Consumption;
 import com.bancos.cuentasbancarias.repository.ConsumptionDAO;
 import com.bancos.cuentasbancarias.repository.CreditCardDAO;
+import com.bancos.cuentasbancarias.repository.CreditDAO;
 import com.bancos.cuentasbancarias.service.ConsumptionService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ public class ConsumptionServiceImpl implements ConsumptionService {
 
     private final CreditCardDAO creditCardDAO;
     private final ConsumptionDAO consumptionDAO;
+    private final CreditDAO creditDAO;
 
     @Override
     public Mono<Consumption> saveConsumption(Consumption consumption) {
@@ -27,8 +29,13 @@ public class ConsumptionServiceImpl implements ConsumptionService {
                     logger.info("ConsumptionServiceImpl.saveConsumption [consumo] ={}",consumption.getAmountConsumption());
                     logger.info("ConsumptionServiceImpl.saveConsumption [monto disponible despúes de consumo] ={}",creditCard.getAmountAviable());
 
+                    return creditCardDAO.save(creditCard).then(Mono.just(creditCard));//cuardamos tarjeta de credito
+                })
+                .flatMap(creditCard -> {
                     consumption.setCreditCard(creditCard);
-                    return consumptionDAO.save(consumption);
-                });
+                    return consumptionDAO.save(consumption);//cuardamos el consumo
+                })
+
+                .switchIfEmpty(Mono.error(new RuntimeException("Credit card not found")));
     }
 }

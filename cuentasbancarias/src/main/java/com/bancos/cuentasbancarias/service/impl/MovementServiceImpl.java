@@ -1,5 +1,6 @@
 package com.bancos.cuentasbancarias.service.impl;
 
+import com.bancos.cuentasbancarias.MovementDTO;
 import com.bancos.cuentasbancarias.documents.Account;
 import com.bancos.cuentasbancarias.documents.Movement;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
@@ -8,9 +9,11 @@ import com.bancos.cuentasbancarias.service.AccountService;
 import com.bancos.cuentasbancarias.service.MovementService;
 import com.bancos.cuentasbancarias.util.Constants;
 import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
@@ -41,6 +44,17 @@ public class MovementServiceImpl implements MovementService {
                     movement.setAccount(account);
                     //guardamos el movimiento
                     return movementDAO.save(movement);
+                });
+    }
+    @Override
+    public Flux<MovementDTO> getMovementsByAccountId(String accountId) {
+        ObjectId accountID=new ObjectId(accountId);
+        return movementDAO.findByAccountId(accountID)
+                .map(movement -> {
+                    MovementDTO dto = new MovementDTO();
+                    dto.setAmount(movement.getAmount());
+                    dto.setTypeMovement(movement.getTypeMovement());
+                    return dto;
                 });
     }
 }

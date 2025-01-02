@@ -1,13 +1,12 @@
 package com.bancos.cuentasbancarias.controller;
 
 
+import com.bancos.cuentasbancarias.MovementDTO;
 import com.bancos.cuentasbancarias.documents.Movement;
 import com.bancos.cuentasbancarias.service.MovementService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 @AllArgsConstructor
 @RestController
@@ -19,4 +18,5 @@ public class MovementController {
     public Mono<Movement> createMovement(@RequestBody Movement movement) {
         return movementService.saveMovement(movement);
     }
+
 }

@@ -23,4 +23,10 @@ public class CreditCardServiceImpl implements CreditCardService {
                  });
 
     }
+    @Override
+    public Mono<Double> getCreditCardBalance(String creditCardId) {
+        return creditCardDAO.findById(creditCardId)
+                .map(CreditCard::getAmountAviable)
+                .switchIfEmpty(Mono.error(new RuntimeException("Credit card not found")));
+    }
 }
