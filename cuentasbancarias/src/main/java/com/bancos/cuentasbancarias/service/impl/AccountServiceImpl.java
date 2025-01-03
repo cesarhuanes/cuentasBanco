@@ -2,10 +2,15 @@ package com.bancos.cuentasbancarias.service.impl;
 
 import com.bancos.cuentasbancarias.documents.Account;
 import com.bancos.cuentasbancarias.documents.AccountType;
+import com.bancos.cuentasbancarias.documents.Credit;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
 import com.bancos.cuentasbancarias.repository.AccountTypeDAO;
 import com.bancos.cuentasbancarias.repository.ClientDAO;
+import com.bancos.cuentasbancarias.repository.CreditDAO;
 import com.bancos.cuentasbancarias.service.AccountService;
+import com.bancos.cuentasbancarias.service.DebtCheckService;
+import jakarta.validation.ValidationException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +18,35 @@ import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-@Slf4j
+@AllArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
-    @Autowired
-    private AccountDAO accountDAO;
-    @Autowired
-    private AccountTypeDAO accountTypeDAO;
-    @Autowired
-    private ClientDAO clientDAO;
-    @Autowired
-    private ReactiveMongoTemplate reactiveMongoTemplate;
+
+    private final AccountDAO accountDAO;
+    private final AccountTypeDAO accountTypeDAO;
+    private final ClientDAO clientDAO;
+    private final DebtCheckService debtCheckService;
+
 
     @Override
     public Mono<Account> createCuenta(Account account) {
-        return clientDAO.findById(account.getClienteId())
-                .flatMap(client -> {
-                    account.setClient(client);
-                    return accountTypeDAO.findById(account.getAccountTypeId())
-                            .map(accountType -> {
-                                account.setAccountType(accountType);
-                                return account;
-                            });
-
-                })
-                .flatMap(accountDAO::save);
+        return debtCheckService.hasOverdueDebt(account.getClienteId())
+                .flatMap(hasOverdueDebt -> {
+                    if (hasOverdueDebt) {
+                        return Mono.error(new ValidationException("El cliente tiene deudas vencidas y no puede crear nuevas cuentas."));
+                    } else {
+                        return clientDAO.findById(account.getClienteId())
+                                .flatMap(client -> {
+                                    account.setClient(client);
+                                    return accountTypeDAO.findById(account.getAccountTypeId())
+                                            .map(accountType -> {
+                                                account.setAccountType(accountType);
+                                                return account;
+                                            })
+                                            .flatMap(accountDAO::save);
+                                });
+                    }
+                });
     }
 
     @Override
@@ -49,7 +58,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Flux<Account> getAllCuentas() {
-        log.info("Listado de cuentas", accountDAO.findAll());
+
         return accountDAO.findAll();
     }
 

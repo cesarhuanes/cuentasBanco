@@ -4,6 +4,7 @@ import com.bancos.cuentasbancarias.documents.*;
 import com.bancos.cuentasbancarias.dto.ClientSummaryDTO;
 import com.bancos.cuentasbancarias.repository.*;
 import com.bancos.cuentasbancarias.service.ClientService;
+import com.bancos.cuentasbancarias.service.DebtCheckService;
 import com.bancos.cuentasbancarias.util.Constants;
 
 import jakarta.validation.ValidationException;
@@ -30,6 +31,7 @@ public class ClientServiceImpl implements ClientService {
    private final AccountTypeDAO accountTypeDAO;
    private final CreditCardDAO creditCardDAO;
    private final CreditDAO creditDAO;
+   private final DebtCheckService debtCheckService;
 
     public Flux<Client> findAll() {
         return clientDAO.findAll()
@@ -69,38 +71,45 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Mono<List<Account>> saveCuentaByCliente(String clienteId, List<Account> lstAccounts) {
        ObjectId objectId=new ObjectId(clienteId);
-        return clientDAO.findById(objectId)
-                .flatMap(cliente -> {
-                    // Asignar el Client a cada Account
-                    Flux<Account> accountsWithClient = Flux.fromIterable(lstAccounts)
-                            .doOnNext(account -> account.setClient(cliente));
+        return debtCheckService.hasOverdueDebt(objectId)
+                .flatMap(hasOverdueDebt -> {
+                    if (hasOverdueDebt) {
+                        return Mono.error(new ValidationException("El cliente tiene deudas vencidas y no puede crear nuevas cuentas."));
+                    } else {
+                        return clientDAO.findById(objectId)
+                                .flatMap(cliente -> {
+                                    // Asignar el Client a cada Account
+                                    Flux<Account> accountsWithClient = Flux.fromIterable(lstAccounts)
+                                            .doOnNext(account -> account.setClient(cliente));
 
-                    // Asignar el AccountType a cada Account
-                    Flux<Account> accountsWithClientAndType = accountsWithClient.flatMap(account ->
-                            accountTypeDAO.findById(account.getAccountTypeId())
-                                    .map(accountType -> {
-                                        account.setAccountType(accountType);
-                                        return account;
-                                    })
-                    );
+                                    // Asignar el AccountType a cada Account
+                                    Flux<Account> accountsWithClientAndType = accountsWithClient.flatMap(account ->
+                                            accountTypeDAO.findById(account.getAccountTypeId())
+                                                    .map(accountType -> {
+                                                        account.setAccountType(accountType);
+                                                        return account;
+                                                    })
+                                    );
 
-                    return accountsWithClientAndType.collectList().flatMap(accounts -> {
-                        String tipoClienteNombre = cliente.getClientType().getNombre();
-                        logger.info("Tipo Cliente = {}", tipoClienteNombre);
+                                    return accountsWithClientAndType.collectList().flatMap(accounts -> {
+                                        String tipoClienteNombre = cliente.getClientType().getNombre();
+                                        logger.info("Tipo Cliente = {}", tipoClienteNombre);
 
-                        Mono<Void> validationMono;
-                        if (tipoClienteNombre.equals(Constants.TIPO_CLIENTE_PERSONA)) {
-                            logger.info("Validando Cliente Persona = {}");
-                            validationMono = validarCuentasPersonales(cliente, accounts);
-                        } else if (tipoClienteNombre.equals(Constants.TIPO_CLIENTE_EMPRESA)) {
-                            logger.info("Validando Cliente Empresa = {}");
-                            validationMono = validarCuentasEmpresariales(cliente, accounts);
-                        } else {
-                            validationMono = Mono.empty();
-                        }
+                                        Mono<Void> validationMono;
+                                        if (tipoClienteNombre.equals(Constants.TIPO_CLIENTE_PERSONA)) {
+                                            logger.info("Validando Cliente Persona = {}");
+                                            validationMono = validarCuentasPersonales(cliente, accounts);
+                                        } else if (tipoClienteNombre.equals(Constants.TIPO_CLIENTE_EMPRESA)) {
+                                            logger.info("Validando Cliente Empresa = {}");
+                                            validationMono = validarCuentasEmpresariales(cliente, accounts);
+                                        } else {
+                                            validationMono = Mono.empty();
+                                        }
 
-                        return validationMono.then(guardarCuentas(cliente, accounts, objectId));
-                    });
+                                        return validationMono.then(guardarCuentas(cliente, accounts, objectId));
+                                    });
+                                });
+                    }
                 });
 
 

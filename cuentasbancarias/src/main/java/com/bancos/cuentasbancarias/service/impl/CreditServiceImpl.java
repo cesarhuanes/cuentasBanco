@@ -31,6 +31,7 @@ public class CreditServiceImpl implements CreditService {
                    return creditTypeDAO.findById(credit.getCreditTypeId())
                            .flatMap(creditType -> {
                                credit.setCreditType(creditType);
+                               credit.updateOverdueStatus();
                                if(creditType.getNombreCredito().equals(Constants.TARJETA_CREDITO)){
                                    CreditCard creditCard = new CreditCard();
                                    creditCard.setClientId(credit.getClientId());
