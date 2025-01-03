@@ -1,12 +1,8 @@
 package com.bancos.cuentasbancarias.service.impl;
 
-import com.bancos.cuentasbancarias.documents.AccountType;
-import com.bancos.cuentasbancarias.documents.Client;
-import com.bancos.cuentasbancarias.documents.Account;
-import com.bancos.cuentasbancarias.repository.AccountTypeDAO;
-import com.bancos.cuentasbancarias.repository.ClientDAO;
-import com.bancos.cuentasbancarias.repository.AccountDAO;
-import com.bancos.cuentasbancarias.repository.ClientTypeDAO;
+import com.bancos.cuentasbancarias.documents.*;
+import com.bancos.cuentasbancarias.dto.ClientSummaryDTO;
+import com.bancos.cuentasbancarias.repository.*;
 import com.bancos.cuentasbancarias.service.ClientService;
 import com.bancos.cuentasbancarias.util.Constants;
 
@@ -32,6 +28,8 @@ public class ClientServiceImpl implements ClientService {
    private final AccountDAO accountDAO;
    private final ClientTypeDAO clientTypeDAO;
    private final AccountTypeDAO accountTypeDAO;
+   private final CreditCardDAO creditCardDAO;
+   private final CreditDAO creditDAO;
 
     public Flux<Client> findAll() {
         return clientDAO.findAll()
@@ -240,4 +238,14 @@ private Mono<List<Account>> guardarCuentas(Client client, List<Account> lstAccou
                         .filter(nombre -> nombre.equals(Constants.CUENTA_AHORRO)))
                 .count();
     }
+
+    public Mono<ClientSummaryDTO> getClientSummary(ObjectId clientId) {
+        Mono<List<Account>> accounts = accountDAO.findByClientId(clientId).collectList();
+        Mono<List<CreditCard>> creditCards = creditCardDAO.findByClientId(clientId).collectList();
+        Mono<List<Credit>> credits = creditDAO.findByClientId(clientId).collectList();
+
+        return Mono.zip(accounts, creditCards, credits)
+                .map(tuple -> new ClientSummaryDTO(tuple.getT1(), tuple.getT2(), tuple.getT3()));
+    }
+
 }

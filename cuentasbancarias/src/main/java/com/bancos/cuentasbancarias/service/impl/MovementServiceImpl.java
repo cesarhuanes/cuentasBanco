@@ -1,7 +1,6 @@
 package com.bancos.cuentasbancarias.service.impl;
 
-import com.bancos.cuentasbancarias.MovementDTO;
-import com.bancos.cuentasbancarias.documents.Account;
+import com.bancos.cuentasbancarias.dto.MovementDTO;
 import com.bancos.cuentasbancarias.documents.Movement;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
 import com.bancos.cuentasbancarias.repository.MovementDAO;

@@ -2,6 +2,8 @@ package com.bancos.cuentasbancarias.service;
 
 import com.bancos.cuentasbancarias.documents.Client;
 import com.bancos.cuentasbancarias.documents.Account;
+import com.bancos.cuentasbancarias.dto.ClientSummaryDTO;
+import org.bson.types.ObjectId;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,4 +15,5 @@ public interface ClientService {
     Mono<Client> save(Client client);
     Mono<Void>   deleteById(String id);
     Mono<List<Account>> saveCuentaByCliente(String clienteId, List<Account> lstAccounts);
+    Mono<ClientSummaryDTO> getClientSummary(ObjectId clientId);
 }

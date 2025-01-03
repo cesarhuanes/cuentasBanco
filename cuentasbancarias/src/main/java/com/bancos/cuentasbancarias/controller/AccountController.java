@@ -1,26 +1,21 @@
 package com.bancos.cuentasbancarias.controller;
 
-import com.bancos.cuentasbancarias.MovementDTO;
+import com.bancos.cuentasbancarias.dto.ClientSummaryDTO;
+import com.bancos.cuentasbancarias.dto.MovementDTO;
 import com.bancos.cuentasbancarias.documents.Account;
 import com.bancos.cuentasbancarias.service.AccountService;
 import com.bancos.cuentasbancarias.service.MovementService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.WebExchangeBindException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @AllArgsConstructor
 @RestController

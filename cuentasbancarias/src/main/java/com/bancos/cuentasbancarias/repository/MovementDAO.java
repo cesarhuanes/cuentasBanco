@@ -1,6 +1,6 @@
 package com.bancos.cuentasbancarias.repository;
 
-import com.bancos.cuentasbancarias.MovementDTO;
+import com.bancos.cuentasbancarias.dto.MovementDTO;
 import com.bancos.cuentasbancarias.documents.Movement;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
