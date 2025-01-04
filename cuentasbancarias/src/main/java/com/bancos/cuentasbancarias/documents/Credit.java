@@ -14,7 +14,7 @@ public class Credit {
     private ObjectId id;
 
     private double amount;//monto
-    private double amountAviable;//saldo disponible
+    private double amountAvailable;//saldo disponible
     private Date dueDate; // Fecha de vencimiento
     private boolean isOverdue; // Indica si la deuda está vencida
 

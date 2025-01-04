@@ -6,5 +6,5 @@ import reactor.core.publisher.Mono;
 
 public interface CreditService {
     Mono<Credit> saveCredit(Credit credit);
-
+    public Mono<Credit> updateCredit(String id, Credit credit);
 }

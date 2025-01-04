@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -12,12 +13,12 @@ import java.util.Date;
 public class Movement {
     @Id
     ObjectId id;
-    Date dateMovement;
+    ObjectId productoId;// Puede ser una cuenta bancaria o crédito
+    TypeProduct typeProduct;// Tipo de producto: "ACCOUNT" o "CREDIT"
     double amount;
-    //deposito o retiro
-    TypeMovement typeMovement;
-    //relacion de cuenta
-    ObjectId accountId;
+    LocalDateTime  dateMovement;
+    TypeMovement typeMovement;//deposito o retiro
     Account account;
+    Credit credit;
 
 }

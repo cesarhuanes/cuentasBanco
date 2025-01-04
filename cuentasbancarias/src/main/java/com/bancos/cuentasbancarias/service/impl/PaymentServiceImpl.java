@@ -22,7 +22,7 @@ public class PaymentServiceImpl implements PaymentService {
         return creditDAO.findById(payment.getCreditId())
                 .flatMap(credit -> {
                     //se puede poner logica de negocio
-                    if(credit.getAmountAviable()+payment.getAmount()>credit.getAmount()){// si lo que pago es mayor a mi linea de credito
+                    if(credit.getAmountAvailable()+payment.getAmount()>credit.getAmount()){// si lo que pago es mayor a mi linea de credito
                         return Mono.error(new ValidationException("El monto pagado excede al monto de credito."));
 
                     }
