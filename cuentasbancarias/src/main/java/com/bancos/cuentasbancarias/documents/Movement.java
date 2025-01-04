@@ -20,5 +20,6 @@ public class Movement {
     TypeMovement typeMovement;//deposito o retiro
     Account account;
     Credit credit;
+    ObjectId payerId;//persona que paga o id de cliente
 
 }

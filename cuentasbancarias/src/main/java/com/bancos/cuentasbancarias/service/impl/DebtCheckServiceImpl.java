@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class DebtCheckServiceImpl implements DebtCheckService {
     private final CreditDAO creditDAO;
-    /***2.	Un cliente no podrá adquirir un producto
+    /***R3 2.	Un cliente no podrá adquirir un producto
      * si posee alguna deuda vencida en algún producto de crédito.*/
 
     @Override

@@ -70,7 +70,7 @@ public class ClientController {
                 .defaultIfEmpty(ResponseEntity.badRequest().build());
 
     }
-    /***1.	Permitir elaborar un resumen consolidado de un cliente con
+    /***R3 1.	Permitir elaborar un resumen consolidado de un cliente con
      * todos los productos que pueda tener en el banco.*/
     @GetMapping("/{clientId}/summary")
     public Mono<ClientSummaryDTO> getClientSummary(@PathVariable ObjectId clientId) {
