@@ -1,8 +1,7 @@
-package com.bancos.cuentasbancarias;
+package com.bancos.cuentasbancarias.service.impl;
 
 import com.bancos.cuentasbancarias.documents.Credit;
 import com.bancos.cuentasbancarias.repository.CreditDAO;
-import com.bancos.cuentasbancarias.service.impl.DebtCheckServiceImpl;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

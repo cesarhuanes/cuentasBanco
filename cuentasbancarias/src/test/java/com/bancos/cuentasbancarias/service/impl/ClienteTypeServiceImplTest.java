@@ -1,7 +1,6 @@
-package com.bancos.cuentasbancarias;
+package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.ClientType;
 import com.bancos.cuentasbancarias.repository.ClientTypeDAO;
-import com.bancos.cuentasbancarias.service.impl.ClienteTypeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

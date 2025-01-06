@@ -1,4 +1,4 @@
-package com.bancos.cuentasbancarias;
+package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.*;
 import com.bancos.cuentasbancarias.dto.MovementDTO;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
@@ -6,7 +6,6 @@ import com.bancos.cuentasbancarias.repository.CreditDAO;
 import com.bancos.cuentasbancarias.repository.MovementDAO;
 import com.bancos.cuentasbancarias.service.AccountService;
 import com.bancos.cuentasbancarias.service.CreditService;
-import com.bancos.cuentasbancarias.service.impl.MovementServiceImpl;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.bancos.cuentasbancarias;
+package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.Account;
 import com.bancos.cuentasbancarias.documents.AccountType;
 import com.bancos.cuentasbancarias.documents.Client;
@@ -6,7 +6,6 @@ import com.bancos.cuentasbancarias.repository.AccountDAO;
 import com.bancos.cuentasbancarias.repository.AccountTypeDAO;
 import com.bancos.cuentasbancarias.repository.ClientDAO;
 import com.bancos.cuentasbancarias.service.DebtCheckService;
-import com.bancos.cuentasbancarias.service.impl.AccountServiceImpl;
 import jakarta.validation.ValidationException;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,11 +1,10 @@
-package com.bancos.cuentasbancarias;
+package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.*;
 import com.bancos.cuentasbancarias.repository.CreditCardDAO;
 import com.bancos.cuentasbancarias.repository.CreditDAO;
 import com.bancos.cuentasbancarias.repository.MovementDAO;
 import com.bancos.cuentasbancarias.repository.PaymentDAO;
 import com.bancos.cuentasbancarias.service.CreditService;
-import com.bancos.cuentasbancarias.service.impl.PaymentServiceImpl;
 import jakarta.validation.ValidationException;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.util.Date;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

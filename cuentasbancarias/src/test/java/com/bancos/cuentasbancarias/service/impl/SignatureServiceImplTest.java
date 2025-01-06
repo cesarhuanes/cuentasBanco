@@ -1,8 +1,7 @@
-package com.bancos.cuentasbancarias;
+package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.Signature;
 import com.bancos.cuentasbancarias.repository.PersonDAO;
 import com.bancos.cuentasbancarias.repository.SignatureDAO;
-import com.bancos.cuentasbancarias.service.impl.SignatureServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

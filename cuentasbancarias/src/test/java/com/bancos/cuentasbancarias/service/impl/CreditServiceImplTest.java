@@ -1,4 +1,4 @@
-package com.bancos.cuentasbancarias;
+package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.Client;
 import com.bancos.cuentasbancarias.documents.Credit;
 import com.bancos.cuentasbancarias.documents.CreditCard;
@@ -8,7 +8,6 @@ import com.bancos.cuentasbancarias.repository.CreditCardDAO;
 import com.bancos.cuentasbancarias.repository.CreditDAO;
 import com.bancos.cuentasbancarias.repository.CreditTypeDAO;
 import com.bancos.cuentasbancarias.service.CreditCardService;
-import com.bancos.cuentasbancarias.service.impl.CreditServiceImpl;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
