@@ -1,0 +1,15 @@
+server:
+  port:7777
+
+spring:
+  profiles:
+    active: default
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git: https://github.com/cesarhuanes/config-server.git
+        default-label: main
+        clone-on-start: true
+
