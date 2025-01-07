@@ -1,18 +1,10 @@
 spring:
   application:
     name: cuenta-bancaria
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: cuentasbanco
-  cloud:
-    config:
-      import: configserver:http://localhost:8888
-      enabled: true
-      import-check:
-        enabled: false
-
+  profiles:
+    default: default
+  config:
+    import: "optional:configserver:http://localhost:7777"
 server:
   port: 8081
   servlet:
