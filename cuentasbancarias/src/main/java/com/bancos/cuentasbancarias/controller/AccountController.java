@@ -1,5 +1,6 @@
 package com.bancos.cuentasbancarias.controller;
 
+import com.bancos.cuentasbancarias.dto.AccountResponse;
 import com.bancos.cuentasbancarias.dto.ClientSummaryDTO;
 import com.bancos.cuentasbancarias.dto.MovementDTO;
 import com.bancos.cuentasbancarias.documents.Account;
@@ -33,9 +34,9 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<Account>>  getCuenta(@PathVariable String id){
+    public Mono<ResponseEntity<AccountResponse>>  getCuenta(@PathVariable String id){
 
-        return accountService.getCuentaById(id)
+        return accountService.getAccountById(id)
                 .map(c->ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .body(c))

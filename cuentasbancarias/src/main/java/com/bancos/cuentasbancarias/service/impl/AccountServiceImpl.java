@@ -3,6 +3,7 @@ package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.Account;
 import com.bancos.cuentasbancarias.documents.AccountType;
 import com.bancos.cuentasbancarias.documents.Credit;
+import com.bancos.cuentasbancarias.dto.AccountResponse;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
 import com.bancos.cuentasbancarias.repository.AccountTypeDAO;
 import com.bancos.cuentasbancarias.repository.ClientDAO;
@@ -54,6 +55,19 @@ public class AccountServiceImpl implements AccountService {
         ObjectId objectId = new ObjectId(id);
         return accountDAO.findById(objectId);
 
+    }
+
+    @Override
+    public Mono<AccountResponse> getAccountById(String id) {
+        return this.getCuentaById(id).map(account -> {
+            AccountResponse response=new AccountResponse();
+            response.setId(account.getId().toString());
+            response.setClient(account.getClient().getNombre());
+            response.setTypeAccount(account.getAccountType().getNombre());
+            response.setSaldo(account.getSaldo());
+            response.setTypeClient(account.getClient().getClientType().getNombre());
+            return response;
+        });
     }
 
     @Override

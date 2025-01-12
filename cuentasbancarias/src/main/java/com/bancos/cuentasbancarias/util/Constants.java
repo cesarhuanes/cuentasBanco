@@ -11,5 +11,7 @@ public class Constants {
     public static final String DEPOSITO="DEPOSITO";
     public static final String RETIRO="RETIRO";
 
+    public static  final String CREDIT_PERSONAL="PERSONAL";
+    public static final String CREDIT_EMPRESARIAL="EMPRESARIAL";
     public static final String TARJETA_CREDITO="TARJETA_CREDITO";
 }

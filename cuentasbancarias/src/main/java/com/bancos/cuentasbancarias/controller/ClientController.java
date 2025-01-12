@@ -1,20 +1,16 @@
 package com.bancos.cuentasbancarias.controller;
 
-import com.bancos.cuentasbancarias.documents.Client;
 import com.bancos.cuentasbancarias.documents.Account;
+import com.bancos.cuentasbancarias.documents.Client;
 import com.bancos.cuentasbancarias.dto.ClientSummaryDTO;
 import com.bancos.cuentasbancarias.service.ClientService;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
 
 import java.util.List;
 
@@ -62,9 +58,9 @@ public class ClientController {
         return clientService.deleteById(id)
                 .then(Mono.just(ResponseEntity.ok().build()));
     }
-
+    /**R1 Funcionalidades desde 1 hasta 6**/
     @PostMapping("/{clienteId}/agregarCuentas")
-    public Mono<ResponseEntity<List<Account>>> agregarCuentasCliente(@PathVariable String clienteId, @RequestBody List<Account> lstAccounts) {
+    public Mono<ResponseEntity<List<Account>>> addAccountByClient(@PathVariable String clienteId, @RequestBody List<Account> lstAccounts) {
         return clientService.saveCuentaByCliente(clienteId, lstAccounts)
                 .map(savedccounts -> ResponseEntity.status(HttpStatus.OK).body(savedccounts))
                 .defaultIfEmpty(ResponseEntity.badRequest().build());
