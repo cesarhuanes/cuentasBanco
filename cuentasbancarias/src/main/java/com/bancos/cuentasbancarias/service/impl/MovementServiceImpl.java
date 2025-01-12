@@ -40,6 +40,9 @@ public class MovementServiceImpl implements MovementService {
                         if (movement.getTypeMovement() == TypeMovement.DEPOSITO) {
                             account.setSaldo(account.getSaldo() + movement.getAmount());
                         } else if (movement.getTypeMovement() == TypeMovement.RETIRO) {
+                            if (movement.getAmount() > account.getSaldo()) {
+                                return Mono.error(new ValidationException("El monto retirado excede el monto disponible."));
+                            }
                             account.setSaldo(account.getSaldo() - movement.getAmount());
                         }
                         logger.info("MovementServiceImpl.saveMovement.nuevoMonto={}", account.getSaldo());
@@ -59,6 +62,9 @@ public class MovementServiceImpl implements MovementService {
                         if (movement.getTypeMovement() == TypeMovement.DEPOSITO) {
                             credit.setAmountAvailable(credit.getAmountAvailable() + movement.getAmount());
                         } else if (movement.getTypeMovement() == TypeMovement.RETIRO) {
+                            if (movement.getAmount() > credit.getAmountAvailable()) {
+                                return Mono.error(new ValidationException("El monto retirado excede el monto disponible."));
+                            }
                             credit.setAmountAvailable(credit.getAmountAvailable() - movement.getAmount());
                         }
                         logger.info("MovementServiceImpl.saveMovement.nuevoMonto={}", credit.getAmountAvailable());
