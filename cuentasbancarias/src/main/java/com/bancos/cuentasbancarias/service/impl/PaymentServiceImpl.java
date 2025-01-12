@@ -11,6 +11,8 @@ import com.bancos.cuentasbancarias.util.Constants;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -20,6 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Service
 public class PaymentServiceImpl implements PaymentService {
+    private static final Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
 
     private final PaymentDAO paymentDAO;
     private final CreditDAO creditDAO;
@@ -45,10 +48,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Mono<Credit> makePayment(ObjectId creditId, double amount, ObjectId payerId) {
+        logger.info("PaymentServiceImpl.makePayment.crediID= {}",creditId,amount,payerId);
         return creditDAO.findById(creditId)
                 .flatMap(credit -> {
                     credit.setAmountAvailable(credit.getAmountAvailable() + amount);
                     //1-guardamos el credito
+                    logger.info("PaymentServiceImpl.makePayment.saveCredit = {}");
                     return creditDAO.save(credit)
                             .flatMap(savedCredit -> {
                                 // Registrar el movimiento del pago
@@ -59,7 +64,7 @@ public class PaymentServiceImpl implements PaymentService {
                                 movement.setDateMovement(LocalDateTime.now());
                                 movement.setTypeMovement(TypeMovement.DEPOSITO);
                                 movement.setPayerId(payerId); // ID del pagador
-
+                                logger.info("PaymentServiceImpl.makePayment.Movement = {}");
                                 return movementDAO.save(movement)
                                         .then(Mono.just(savedCredit));
                             })
@@ -69,6 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
                                     return creditCardDAO.findByClientId(savedCredit.getClientId())
                                             .flatMap(creditCard -> {
                                                 creditCard.setAmountAviable(creditCard.getAmountAviable() + amount);
+                                                logger.info("PaymentServiceImpl.makePayment.saveCreditCard ={}");
                                                 return creditCardDAO.save(creditCard);
                                             })
                                             .then(Mono.just(savedCredit));
@@ -83,6 +89,7 @@ public class PaymentServiceImpl implements PaymentService {
                                 payment.setAmount(amount);
                                 payment.setDatePay(new Date());
                                 payment.setCredit(savedCredit);
+                                logger.info("PaymentServiceImpl.makePayment.savePaiment ={}");
                                 return paymentDAO.save(payment).then(Mono.just(savedCredit));
 
                             });

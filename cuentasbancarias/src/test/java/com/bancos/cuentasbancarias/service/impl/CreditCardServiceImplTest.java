@@ -1,6 +1,7 @@
 package com.bancos.cuentasbancarias.service.impl;
 import com.bancos.cuentasbancarias.documents.Client;
 import com.bancos.cuentasbancarias.documents.CreditCard;
+import com.bancos.cuentasbancarias.repository.ClientDAO;
 import com.bancos.cuentasbancarias.repository.CreditCardDAO;
 import com.bancos.cuentasbancarias.service.ClientService;
 import org.bson.types.ObjectId;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CreditCardServiceImplTest {
     @Mock
-    private ClientService clientService;
+    private ClientDAO clientDAO;
 
     @Mock
     private CreditCardDAO creditCardDAO;
@@ -44,7 +45,7 @@ public class CreditCardServiceImplTest {
 
     @Test
     void testSaveCreditCard() {
-        when(clientService.findById(any(String.class))).thenReturn(Mono.just(client));
+        when(clientDAO.findById(any(ObjectId.class))).thenReturn(Mono.just(client));
         when(creditCardDAO.save(any(CreditCard.class))).thenReturn(Mono.just(creditCard));
 
         Mono<CreditCard> result = creditCardService.saveCreditCard(creditCard);

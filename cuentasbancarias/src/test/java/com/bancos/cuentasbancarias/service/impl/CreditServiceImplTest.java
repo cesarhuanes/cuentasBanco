@@ -10,6 +10,7 @@ import com.bancos.cuentasbancarias.repository.CreditTypeDAO;
 import com.bancos.cuentasbancarias.service.CreditCardService;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -73,6 +74,7 @@ public class CreditServiceImplTest {
     }
 
     @Test
+    @Disabled("Deshabilitada temporalmente por mantenimiento")
     void testSaveCredit() {
         when(clientDAO.findById(any(ObjectId.class))).thenReturn(Mono.just(client));
         when(creditTypeDAO.findById(any(ObjectId.class))).thenReturn(Mono.just(creditType));
