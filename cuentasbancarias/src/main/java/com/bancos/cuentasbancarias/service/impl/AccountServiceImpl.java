@@ -1,21 +1,15 @@
 package com.bancos.cuentasbancarias.service.impl;
 
 import com.bancos.cuentasbancarias.documents.Account;
-import com.bancos.cuentasbancarias.documents.AccountType;
-import com.bancos.cuentasbancarias.documents.Credit;
-import com.bancos.cuentasbancarias.dto.AccountResponse;
+import com.bancos.cuentasbancarias.response.AccountResponse;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
 import com.bancos.cuentasbancarias.repository.AccountTypeDAO;
 import com.bancos.cuentasbancarias.repository.ClientDAO;
-import com.bancos.cuentasbancarias.repository.CreditDAO;
 import com.bancos.cuentasbancarias.service.AccountService;
 import com.bancos.cuentasbancarias.service.DebtCheckService;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

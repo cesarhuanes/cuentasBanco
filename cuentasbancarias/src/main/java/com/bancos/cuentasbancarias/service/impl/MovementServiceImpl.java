@@ -2,7 +2,7 @@ package com.bancos.cuentasbancarias.service.impl;
 
 import com.bancos.cuentasbancarias.documents.TypeMovement;
 import com.bancos.cuentasbancarias.documents.TypeProduct;
-import com.bancos.cuentasbancarias.dto.MovementDTO;
+import com.bancos.cuentasbancarias.dto.MovementDto;
 import com.bancos.cuentasbancarias.documents.Movement;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
 import com.bancos.cuentasbancarias.repository.CreditDAO;
@@ -10,7 +10,6 @@ import com.bancos.cuentasbancarias.repository.MovementDAO;
 import com.bancos.cuentasbancarias.service.AccountService;
 import com.bancos.cuentasbancarias.service.CreditService;
 import com.bancos.cuentasbancarias.service.MovementService;
-import com.bancos.cuentasbancarias.util.Constants;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
@@ -81,15 +80,5 @@ public class MovementServiceImpl implements MovementService {
             return Mono.error(new ValidationException("Tipo de producto no soportado"));
         }
     }
-    @Override
-    public Flux<MovementDTO> getMovementsByAccountId(String accountId) {
-        ObjectId accountID=new ObjectId(accountId);
-        return movementDAO.findByAccountId(accountID)
-                .map(movement -> {
-                    MovementDTO dto = new MovementDTO();
-                    dto.setAmount(movement.getAmount());
-                    dto.setTypeMovement(movement.getTypeMovement());
-                    return dto;
-                });
-    }
+
 }

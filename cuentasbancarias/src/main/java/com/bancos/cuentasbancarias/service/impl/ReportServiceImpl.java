@@ -1,19 +1,27 @@
 package com.bancos.cuentasbancarias.service.impl;
 
+import com.bancos.cuentasbancarias.documents.Account;
 import com.bancos.cuentasbancarias.documents.Client;
+import com.bancos.cuentasbancarias.documents.Credit;
 import com.bancos.cuentasbancarias.dto.BalanceDto;
+import com.bancos.cuentasbancarias.dto.MovementDto;
+import com.bancos.cuentasbancarias.dto.ProductDto;
 import com.bancos.cuentasbancarias.repository.AccountDAO;
+import com.bancos.cuentasbancarias.repository.ClientDAO;
 import com.bancos.cuentasbancarias.repository.CreditDAO;
+import com.bancos.cuentasbancarias.repository.MovementDAO;
 import com.bancos.cuentasbancarias.response.BalanceResponse;
+import com.bancos.cuentasbancarias.response.MovementResponse;
 import com.bancos.cuentasbancarias.service.ClientService;
-import com.bancos.cuentasbancarias.service.CreditService;
 import com.bancos.cuentasbancarias.service.ReportService;
+import com.bancos.cuentasbancarias.util.Util;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -26,6 +34,8 @@ public class ReportServiceImpl implements ReportService {
     private final ClientService clientService;
     private final CreditDAO creditDAO;
     private final AccountDAO accountDAO;
+    private final ClientDAO clientDAO;
+    private final MovementDAO movementDAO;
 
     @Override
     public Mono<BalanceResponse> getAccountBalance(ObjectId clientId) {
@@ -35,7 +45,7 @@ public class ReportServiceImpl implements ReportService {
       Mono<List<BalanceDto>> lstCredit=creditDAO.findByClientId(clientId)
               .map(credit -> {
                   BalanceDto balanceDto=new BalanceDto();
-                  balanceDto.setAccountId(credit.getId());
+                  balanceDto.setAccountId(Util.convertObjectIdToString(credit.getId()));
                   balanceDto.setBalance(credit.getAmountAvailable());
                   balanceDto.setTypeAccount(credit.getCreditType().getNombreCredito());
                   return  balanceDto;
@@ -47,7 +57,7 @@ public class ReportServiceImpl implements ReportService {
       Mono<List<BalanceDto>> lstAccount=accountDAO.findByClientId(clientId)
               .map(account -> {
                   BalanceDto balanceDto=new BalanceDto();
-                  balanceDto.setAccountId(account.getId());
+                  balanceDto.setAccountId(Util.convertObjectIdToString(account.getId()));
                   balanceDto.setBalance(account.getSaldo());
                   balanceDto.setTypeAccount(account.getAccountType().getNombre());
                   return  balanceDto;
@@ -72,7 +82,7 @@ public class ReportServiceImpl implements ReportService {
                     logger.info("ReportServiceImpl.getAccountBalance.client",client1.getNombre());
 
                      BalanceResponse balanceResponse=new BalanceResponse();
-                     balanceResponse.setClientId(client1.getId());
+                     balanceResponse.setClientId(Util.convertObjectIdToString(client1.getId()));
                      balanceResponse.setNameClient(client1.getNombre());
                      balanceResponse.setTypeClient(client1.getClientType().getNombre());
                      balanceResponse.setLstBalanceDtoList(lstBalanceDtos);
@@ -82,6 +92,71 @@ public class ReportServiceImpl implements ReportService {
                     logger.error("Error al recuperar el saldo de la cuenta: {}", e.getMessage());
                     return Mono.error(new ValidationException("Error al recuperar el saldo de la cuenta: " + e.getMessage()));
                 });
+    }
+
+    @Override
+    public Mono<MovementResponse> findAllMovementsByClientId(ObjectId clientId) {
+        // Recuperar el cliente
+        Mono<Client> clientMono = clientDAO.findById(clientId)
+                .switchIfEmpty(Mono.error(new ValidationException("Client not found")));
+
+        // Recuperar todas las cuentas del cliente
+        Flux<Account> accounts = accountDAO.findByClientId(clientId);
+
+        // Recuperar todos los créditos del cliente
+        Flux<Credit> credits = creditDAO.findByClientId(clientId);
+
+        // Mapear cuentas a ProductDto
+        Flux<ProductDto> accountProducts = accounts.flatMap(account ->
+                movementDAO.findByProductoId(account.getId())
+                        .map(movement -> {
+                            MovementDto movementDto = new MovementDto();
+                            movementDto.setAmount(movement.getAmount());
+                            movementDto.setDateMovement(movement.getDateMovement());
+                            movementDto.setTypeMovement(movement.getTypeMovement().toString());
+                            return movementDto;
+                        })
+                        .collectList()
+                        .map(movements -> {
+                            ProductDto productDto = new ProductDto();
+                            productDto.setProductId(Util.convertObjectIdToString(account.getId()));
+                            productDto.setProductName(account.getAccountType().getNombre());
+                            productDto.setLstMovement(movements);
+                            return productDto;
+                        })
+        );
+
+        // Mapear créditos a ProductDto
+        Flux<ProductDto> creditProducts = credits.flatMap(credit ->
+                movementDAO.findByProductoId(credit.getId())
+                        .map(movement -> {
+                            MovementDto movementDto = new MovementDto();
+                            movementDto.setAmount(movement.getAmount());
+                            movementDto.setDateMovement(movement.getDateMovement());
+                            movementDto.setTypeMovement(movement.getTypeMovement().toString());
+                            return movementDto;
+                        })
+                        .collectList()
+                        .map(movements -> {
+                            ProductDto productDto = new ProductDto();
+                            productDto.setProductId(Util.convertObjectIdToString(credit.getId()));
+                            productDto.setProductName(credit.getCreditType().getNombreCredito());
+                            productDto.setLstMovement(movements);
+                            return productDto;
+                        })
+        );
+
+        // Combinar todos los ProductDto y construir el MovementResponse
+        return clientMono.flatMap(client ->
+                Flux.concat(accountProducts, creditProducts)
+                        .collectList()
+                        .map(productDtos -> {
+                            MovementResponse movementResponse = new MovementResponse();
+                            movementResponse.setClientName(client.getNombre());
+                            movementResponse.setLstProduct(productDtos);
+                            return movementResponse;
+                        })
+        );
     }
 
 }

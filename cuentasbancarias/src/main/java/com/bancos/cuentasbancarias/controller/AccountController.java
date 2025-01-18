@@ -1,13 +1,11 @@
 package com.bancos.cuentasbancarias.controller;
 
-import com.bancos.cuentasbancarias.dto.AccountResponse;
-import com.bancos.cuentasbancarias.dto.ClientSummaryDTO;
-import com.bancos.cuentasbancarias.dto.MovementDTO;
+import com.bancos.cuentasbancarias.response.AccountResponse;
+import com.bancos.cuentasbancarias.dto.MovementDto;
 import com.bancos.cuentasbancarias.documents.Account;
 import com.bancos.cuentasbancarias.service.AccountService;
 import com.bancos.cuentasbancarias.service.MovementService;
 import lombok.AllArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -66,9 +64,5 @@ public class AccountController {
 
     }
 
-    @GetMapping("/{accountId}/movements")
-    public Flux<MovementDTO> getMovementsByAccountId(@PathVariable String accountId) {
-        return movementService.getMovementsByAccountId(accountId);
-    }
 
 }

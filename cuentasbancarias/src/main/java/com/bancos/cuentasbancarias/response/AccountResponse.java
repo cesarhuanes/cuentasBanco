@@ -1,8 +1,6 @@
-package com.bancos.cuentasbancarias.dto;
+package com.bancos.cuentasbancarias.response;
 
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class AccountResponse {

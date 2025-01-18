@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class BalanceResponse {
-    private ObjectId clientId;
+    private String clientId;
     private String nameClient;
     private String typeClient;
     private List<BalanceDto> lstBalanceDtoList;
