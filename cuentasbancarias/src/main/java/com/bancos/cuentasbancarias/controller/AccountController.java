@@ -66,11 +66,6 @@ public class AccountController {
 
     }
 
-    @GetMapping("/{accountId}/balance")
-    public Mono<Double> getAccountBalance(@PathVariable String accountId) {
-        return accountService.getAccountBalance(accountId);
-    }
-
     @GetMapping("/{accountId}/movements")
     public Flux<MovementDTO> getMovementsByAccountId(@PathVariable String accountId) {
         return movementService.getMovementsByAccountId(accountId);

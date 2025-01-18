@@ -93,11 +93,4 @@ public class AccountServiceImpl implements AccountService {
         return accountDAO.delete(account);
     }
 
-    @Override
-    public Mono<Double> getAccountBalance(String accountId) {
-        var  accountID=new ObjectId(accountId);
-        return accountDAO.findById(accountID)
-                .map(Account::getSaldo)
-                .switchIfEmpty(Mono.error(new RuntimeException("Account not found")));
-    }
 }

@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/movement")
 public class MovementController {
-   /**R1-Funcionalidad 8 **/
+   /**R1-Funcionalidad 8 y 10 **/
     private final MovementService movementService;
     @PostMapping
     public Mono<Movement> createMovement(@RequestBody Movement movement) {

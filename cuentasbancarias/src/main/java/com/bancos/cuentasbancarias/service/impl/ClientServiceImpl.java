@@ -36,21 +36,26 @@ public class ClientServiceImpl implements ClientService {
     public Flux<Client> findAll() {
         return clientDAO.findAll()
                 .flatMap(client -> clientTypeDAO.findById(client.getClientTypeId())
+                        .defaultIfEmpty(new ClientType()) // Crear un ClientType vacío si no se encuentra
                         .map(clientType -> {
                             client.setClientType(clientType);
                             return client;
-                        }));
+                        })
+                );
     }
 
     @Override
     public Mono<Client> findById(String id) {
-        ObjectId clienteId=new ObjectId(id);
+        ObjectId clienteId = new ObjectId(id);
         return clientDAO.findById(clienteId)
+                .switchIfEmpty(Mono.error(new ValidationException("Cliente no se encuentra registrado.")))
                 .flatMap(client -> clientTypeDAO.findById(client.getClientTypeId())
+                        .defaultIfEmpty(new ClientType()) // Crear un ClientType vacío si no se encuentra
                         .map(clientType -> {
                             client.setClientType(clientType);
                             return client;
-                        }));
+                        })
+                );
     }
 
     @Override
